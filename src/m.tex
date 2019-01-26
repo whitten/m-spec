@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts,listings,syntax,fullpage,multicol,float}
+\renewcommand{\ttdefault}{pcr}
+
+\title{The M Specification}
+\author{Aedan Smith}
+
+\setlength{\parindent}{0in}
+
+\lstset{
+morekeywords={def,lambda,macro,do},
+morecomment=[l]{;},
+morestring=[b]",
+basicstyle=\ttfamily\small,
+keywordstyle=\textbf,
+commentstyle=\textit,
+stringstyle=\textit,
+showstringspaces=false,
+escapeinside={<<}{>>}
+}
+
+\floatstyle{boxed}
+\restylefloat{figure}
+\setlength\intextsep{0pt}
+
+\begin{document}
+    \maketitle
+    \newpage
+
+    \tableofcontents
+    \newpage
+
+    \section{Syntax}\label{sec:syntax}
+
+    \begin{figure}[h]
+        \setlength{\grammarindent}{8em}
+        \centering
+        \begin{grammar}
+            <character> ::= $\mathbb{C}\supseteq<special + newline + whitespace>$
+
+            <special> ::= \{`;',`"',`(',`)'\}
+
+            <comment> ::= `;' <character - newline>* <newline>
+
+            <symbol> ::= <character - special - whitespace>*
+            \alt `"' (<character - `"'> | `\\' <character>)* `"'
+
+            <expression> ::= <symbol>
+            \alt `(' <expression>* `)'
+
+            <program> ::= <expression>*
+        \end{grammar}
+        \caption{The M grammar in EBNF.}
+    \end{figure}
+
+    \begin{multicols}{2}
+        \subsection{Characters}\label{subsec:characters}
+
+        M can use any character set which encodes the four special characters, a backslash, a newline character, and a whitespace character.
+        For consistency, all M code samples in this specification use the ASCII character set.
+
+        \subsection{Specials}\label{subsec:specials}
+
+        The four special characters are reserved for use in other productions.
+        This is done to ensure that symbols such as \lstinline$this()$ do not include any special characters which are meant be used for other syntactic constructs.
+        Note that the backslash is not included in the list of special characters as it is only used inside of a literal symbol.
+
+        \subsection{Comments}\label{subsec:comments}
+
+        Comments in M begin with a semicolon and last until the end of the line.
+        They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code.
+
+        \subsection{Symbols}\label{subsec:symbols}
+
+        Symbols in M have two forms, inline and literal.
+        Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default.
+        Literal symbols are escapable strings surrounded by quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbol \lstinline$"()"$).
+
+        \subsection{Expressions}\label{subsec:expressions}
+
+        Expressions in M have two forms, symbols and lists.
+        Symbol expressions are identical to symbols defined in section~\ref{subsec:symbols}.
+        Lists expressions are simply lists of expressions surrounded by matching parentheses.
+
+        \subsection{Programs}\label{subsec:programs}
+
+        M programs are lists of expressions.
+        It is unspecified how these expressions are stored, so they can be in memory, in a single file, in multiple files, on the internet, or any other method which is convenient.
+    \end{multicols}
+    \newpage
+
+    \section{Semantics}\label{sec:semantics}
+
+    \begin{figure}[h]
+        \centering
+        \begin{align*}
+            \text{(Context)}\quad&\dfrac{a\Downarrow i}{\langle a,\Gamma\rangle\Downarrow\langle i,\Gamma\rangle}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow\lambda x.i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle i[x/j]\rangle\Downarrow v}{\langle\lstinline$(a b)$,\Gamma\rangle\Downarrow v}\quad&\text{(Apply-Lambda)}\\
+            \text{(Do)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(do a)$,\Gamma\rangle\Downarrow\pi i}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow\pi i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle j(i)\rangle\Downarrow\pi v}{\langle\lstinline$(a b)$,\Gamma\rangle\Downarrow\pi v}\quad&\text{(Apply-Do)}\\
+            \text{(Lambda)}\quad&\dfrac{}{\lstinline$(lambda x a)$\Downarrow\lambda x.a}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(def x a)$,\Gamma\rangle\Downarrow\langle i,\Gamma(x) = i\rangle}\quad&\text{(Def)}\\
+            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(macro a e)$,\Gamma\rangle\Downarrow a(e)}
+            &\dfrac{}{\langle a,\Gamma\rangle\Downarrow\Gamma(a)}\quad&\text{(Symbol)}
+        \end{align*}
+        \caption{The natural semantics of M.}
+    \end{figure}
+
+    \begin{multicols}{2}
+        \subsection{Def}\label{subsec:def}
+
+        Def expressions are expressions of the form \lstinline$(def name value)$.
+        They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the the \lstinline$value$ they define.
+        Multiple def expressions with the same \lstinline$name$ are invalid.
+        \newline
+
+        \subsection{Symbol}\label{subsec:symbol}
+
+        Symbol expressions are expressions of the form \lstinline$name$.
+        They always evaluate to the \lstinline$value$ of the def expression that defines \lstinline$name$.
+        If \lstinline$name$ is not defined, they evaluate to $\bot$.
+        \newline
+
+        \subsection{Lambda}\label{subsec:lambda}
+
+        Lambda expressions are expressions of the form \lstinline$(lambda name value)$.
+        They evaluate to a function $\lambda\lstinline{name}.\lstinline{value}$.
+        When applied, they perform the substitution $\lstinline{value}\left[\lstinline{name}/\lstinline{argument}\right]$.
+        \newline
+
+        \subsection{Do}\label{subsec:do}
+
+        Do expressions are expressions of the form \lstinline$(do value)$
+        They evaluate to a process $\pi\lstinline{value}$.
+        When applied, they apply their \lstinline$argument$ to \lstinline$value$.
+        If the result of application is not a process, they evaluate to $\bot$ instead.
+        \newline
+
+        \subsection{Apply}\label{subsec:apply}
+
+        Apply expressions are expressions of the form \lstinline$(value argument)$.
+        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:lambda}.
+        If \lstinline$value$ is a process, it performs application as described in section~\ref{subsec:do}.
+        \newline
+
+        \subsection{Macro}\label{subsec:macro}
+
+        Macro expressions are expressions of the form \lstinline$(macro name expression)$.
+        Before evaluation, they evaluate \lstinline$name$ and apply it to \lstinline$expression$, replacing themselves with the result.
+        The \lstinline$expression$ is encoded as a coproduct of a symbol and a list as described in section~\ref{sec:encodings}.
+        \newline
+    \end{multicols}
+    \newpage
+
+    \section{Encodings}\label{sec:encodings}
+
+    \begin{multicols*}{2}
+        \lstinputlisting{encodings.m}
+    \end{multicols*}
+    \newpage
+
+    \section{Reference Implementation}\label{sec:implementation}
+
+    \subsection{Parser}\label{subsec:parser}
+
+    \lstinputlisting{parser.m}
+
+    \subsection{Interpreter}\label{subsec:interpreter}
+
+    \lstinputlisting{interpreter.m}
+
+    \subsection{Compiler}\label{subsec:compiler}
+
+    \lstinputlisting{compiler.m}
+\end{document}
