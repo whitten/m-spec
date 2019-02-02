@@ -100,7 +100,7 @@ escapeinside={<<}{>>}
             &\dfrac{\langle a,\Gamma\rangle\Downarrow\pi i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle j(i)\rangle\Downarrow\pi v}{\langle\lstinline$(a b)$,\Gamma\rangle\Downarrow\pi v}\quad&\text{(Apply-Do)}\\
             \text{(Lambda)}\quad&\dfrac{}{\lstinline$(lambda x a)$\Downarrow\lambda x.a}
             &\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(def x a)$,\Gamma\rangle\Downarrow\langle i,\Gamma(x) = i\rangle}\quad&\text{(Def)}\\
-            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(macro a e)$,\Gamma\rangle\Downarrow a(e)}
+            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(macro a e)$,\Gamma\rangle\Downarrow i(e)}
             &\dfrac{}{\langle a,\Gamma\rangle\Downarrow\Gamma(a)}\quad&\text{(Symbol)}
         \end{align*}
         \caption{The natural semantics of M.}
