@@ -8,7 +8,7 @@
 \setlength{\parindent}{0in}
 
 \lstset{
-morekeywords={def,lambda,macro,do},
+morekeywords={def,fn,ap,impure},
 morecomment=[l]{;},
 morestring=[b]",
 basicstyle=\ttfamily\small,
@@ -95,19 +95,19 @@ escapeinside={<<}{>>}
         \centering
         \begin{align*}
             \text{(Context)}\quad&\dfrac{a\Downarrow i}{\langle a,\Gamma\rangle\Downarrow\langle i,\Gamma\rangle}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow\lambda x.i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle i[x/j]\rangle\Downarrow v}{\langle\lstinline$(a b)$,\Gamma\rangle\Downarrow v}\quad&\text{(Apply-Lambda)}\\
-            \text{(Do)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(do a)$,\Gamma\rangle\Downarrow\pi i}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow\pi i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle j(i)\rangle\Downarrow\pi v}{\langle\lstinline$(a b)$,\Gamma\rangle\Downarrow\pi v}\quad&\text{(Apply-Do)}\\
-            \text{(Lambda)}\quad&\dfrac{}{\lstinline$(lambda x a)$\Downarrow\lambda x.a}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(def x a)$,\Gamma\rangle\Downarrow\langle i,\Gamma(x) = i\rangle}\quad&\text{(Def)}\\
-            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(macro a e)$,\Gamma\rangle\Downarrow i(e)}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow\lambda x.i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle i[x/j]\rangle\Downarrow v}{\langle\lstinline$(ap a b)$,\Gamma\rangle\Downarrow v}\quad&\text{(Apply-Function)}\\
+            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(a e)$,\Gamma\rangle\Downarrow i(e)}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow\pi i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle j(i)\rangle\Downarrow\pi v}{\langle\lstinline$(ap a b)$,\Gamma\rangle\Downarrow\pi v}\quad&\text{(Apply-Impure)}\\
+            \text{(Function)}\quad&\dfrac{}{\lstinline$(fn x a)$\Downarrow\lambda x.a}
+            &\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(def x a)$,\Gamma\rangle\Downarrow\langle i,\Gamma(x) = i\rangle}\quad&\text{(Define)}\\
+            \text{(Impure)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(impure a)$,\Gamma\rangle\Downarrow\pi i}
             &\dfrac{}{\langle a,\Gamma\rangle\Downarrow\Gamma(a)}\quad&\text{(Symbol)}
         \end{align*}
         \caption{The natural semantics of M.}
     \end{figure}
 
     \begin{multicols}{2}
-        \subsection{Def}\label{subsec:def}
+        \subsection{Define}\label{subsec:def}
 
         Def expressions are expressions of the form \lstinline$(def name value)$.
         They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the the \lstinline$value$ they define.
@@ -121,16 +121,16 @@ escapeinside={<<}{>>}
         If \lstinline$name$ is not defined, they evaluate to $\bot$.
         \newline
 
-        \subsection{Lambda}\label{subsec:lambda}
+        \subsection{Function}\label{subsec:function}
 
-        Lambda expressions are expressions of the form \lstinline$(lambda name value)$.
+        Function expressions are expressions of the form \lstinline$(fn name value)$.
         They evaluate to a function $\lambda\lstinline{name}.\lstinline{value}$.
         When applied, they perform the substitution $\lstinline{value}\left[\lstinline{name}/\lstinline{argument}\right]$.
         \newline
 
-        \subsection{Do}\label{subsec:do}
+        \subsection{Impure}\label{subsec:do}
 
-        Do expressions are expressions of the form \lstinline$(do value)$
+        Impure expressions are expressions of the form \lstinline$(impure value)$
         They evaluate to a process $\pi\lstinline{value}$.
         When applied, they apply their \lstinline$argument$ to \lstinline$value$.
         If the result of application is not a process, they evaluate to $\bot$ instead.
@@ -138,14 +138,14 @@ escapeinside={<<}{>>}
 
         \subsection{Apply}\label{subsec:apply}
 
-        Apply expressions are expressions of the form \lstinline$(value argument)$.
-        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:lambda}.
+        Apply expressions are expressions of the form \lstinline$(ap value argument)$.
+        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:function}.
         If \lstinline$value$ is a process, it performs application as described in section~\ref{subsec:do}.
         \newline
 
         \subsection{Macro}\label{subsec:macro}
 
-        Macro expressions are expressions of the form \lstinline$(macro name expression)$.
+        Macro expressions are expressions of the form \lstinline$(name expression)$.
         Before evaluation, they evaluate \lstinline$name$ and apply it to \lstinline$expression$, replacing themselves with the result.
         The \lstinline$expression$ is encoded as a coproduct of a symbol and a list as described in section~\ref{sec:encodings}.
         \newline

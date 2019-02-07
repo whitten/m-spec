@@ -1,68 +1,73 @@
 ;;; Functions
 
-(def id (lambda x x))
+(def id (fn x x))
 
 (def compose
-  (lambda f g
-    (lambda x
-      (f g x))))
+  (fn f g
+    (fn x
+      (ap f g x))))
 
 (def const
-  (lambda x
-    (lambda "" x)))
+  (fn x
+    (fn "" x)))
 
 ;;; Booleans
 
-(def true (id const))
-(def false (const id))
+(def true
+  (fn x
+    (fn "" x)))
+
+(def false
+  (fn ""
+    (fn x x)))
 
 ;;; Products
 
 (def pair
-  (lambda first second
-    (lambda value
-      (value first second))))
+  (fn first second
+    (fn value
+      (ap value first second))))
 
 (def first
-  (lambda pair
-    (pair true)))
+  (fn pair
+    (ap pair true)))
 
 (def second
-  (lambda pair
-    (pair false)))
+  (fn pair
+    (ap pair false)))
 
 ;;; Coproducts
 
 (def left
-  (lambda value
-    (lambda first ""
-      (first value))))
+  (fn value
+    (fn first ""
+      (ap first value))))
 
 (def right
-  (lambda value
-    (lambda "" second
-      (second value))))
+  (fn value
+    (fn "" second
+      (ap second value))))
 
 (def left?
-  (lambda x
-    (x (const true) (const false))))
+  (fn x
+    (ap x (ap const true) (ap const false))))
 
 (def right?
-  (lambda x
-    (x (const false) (const true))))
+  (fn x
+    (ap x (ap const false) (ap const true))))
 
 ;;; Lists
 
-(def nil (left false))
-(def cons (compose right pair))
+(def nil (ap left false))
+(def cons (ap compose right pair))
 
 (def car
-  (lambda value
-    (list id left)))
+  (fn value
+    (ap list id left)))
 
 (def cdr
-  (lambda list
-    (list id right)))
+  (fn list
+    (ap list id right)))
 
 (def nil? left?)
 
@@ -70,7 +75,7 @@
 
 (def 0 ())
 (def 0? nil?)
-(def inc (cons ()))
+(def inc (ap cons ()))
 (def dec cdr)
 
 ;;; Chars
