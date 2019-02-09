@@ -48,13 +48,20 @@
     (fn "" second
       (ap second value))))
 
+
+
+
 (def left?
-  (fn x
-    (ap x (ap const true) (ap const false))))
+  (fn either
+    (ap either
+      (ap const true)
+      (ap const false))))
 
 (def right?
-  (fn x
-    (ap x (ap const false) (ap const true))))
+  (fn either
+    (ap either
+      (ap const false)
+      (ap const true))))
 
 ;;; Lists
 
@@ -73,10 +80,12 @@
 
 ;;; Natural Numbers
 
-(def 0 ())
-(def 0? nil?)
-(def inc (ap cons ()))
-(def dec cdr)
+(def 0 (ap left id))
+(def 0? left?)
+(def inc right)
+(def dec
+  (fn nat
+    (ap nat left id)))
 
 ;;; Chars
 
