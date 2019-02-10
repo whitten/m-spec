@@ -94,14 +94,14 @@ escapeinside={<<}{>>}
     \begin{figure}[h]
         \centering
         \begin{align*}
-            \text{(Function)}\;&\dfrac{}{\lstinline$(fn x e)$\Downarrow\lambda x.e}
-            &\dfrac{\langle f,\Gamma\rangle\Downarrow\lambda x.e\qquad\langle a,\Gamma\rangle\Downarrow i\qquad\langle e[x/i]\rangle\Downarrow v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow v}\;&\text{(Apply-Function)}\\
-            \text{(Impure)}\;&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(impure e)$,\Gamma\rangle\Downarrow\pi v}
-            &\dfrac{\langle f,\Gamma\rangle\Downarrow\pi e\qquad\langle a,\Gamma\rangle\Downarrow i\qquad\langle i(e)\rangle\Downarrow\pi v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow\pi v}\;&\text{(Apply-Impure)}\\
-            \text{(Macro)}\;&\dfrac{\langle x,\Gamma\rangle\Downarrow v}{\langle\lstinline$(macro x)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x)\in\mathbb{M}\rangle}
-            &\dfrac{\Gamma(m)\in\mathbb{M}\quad\langle m,\Gamma\rangle\Downarrow f\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\lstinline$(m e)$,\Gamma\rangle\Downarrow v}\;&\text{(Apply-Macro)}\\
-            \text{(Define)}\;&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(def x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\rangle}
-            &\dfrac{}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}\;&\text{(Symbol)}
+            \text{(Function)}&\dfrac{}{\lstinline$(fn x e)$\Downarrow\lambda x.e}
+            &\dfrac{\Gamma(m)\in\mathbb{M}\quad\langle m,\Gamma\rangle\Downarrow f\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\lstinline$(m e)$,\Gamma\rangle\Downarrow v}&\text{(Apply-Macro)}\\
+            \text{(Impure)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(impure e)$,\Gamma\rangle\Downarrow\pi v}
+            &\dfrac{\langle f,\Gamma\rangle\Downarrow\lambda x.e\quad\langle a,\Gamma\rangle\Downarrow i\quad\langle e[x/i]\rangle\Downarrow v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow v}&\text{(Apply-Function)}\\
+            \text{(Define)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(def x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\notin\mathbb{M}\rangle}
+            &\dfrac{\langle f,\Gamma\rangle\Downarrow\pi e\quad\langle a,\Gamma\rangle\Downarrow i\quad\langle i(e)\rangle\Downarrow\pi v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow\pi v}&\text{(Apply-Impure)}\\
+            \text{(Macro)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(macro x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\in\mathbb{M}\rangle}
+            &\dfrac{}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}&\text{(Symbol)}
         \end{align*}
         \caption{The natural semantics of M.}
     \end{figure}
@@ -138,8 +138,8 @@ escapeinside={<<}{>>}
 
         \subsection{Macro}\label{subsec:macro}
 
-        Macro expressions are expressions of the form \lstinline$(macro name)$.
-        They state that all symbols \lstinline$name$ are macros, and evaluate to the value of \lstinline$name$.
+        Macro expressions are expressions of the form \lstinline$(macro name value)$.
+        They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the value of \lstinline$name$.
         When applied, macros evaluate \lstinline$name$ and apply it to the expression encoding of \lstinline$argument$, then evaluate the result.
         \newline
 
