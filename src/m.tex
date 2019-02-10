@@ -8,7 +8,7 @@
 \setlength{\parindent}{0in}
 
 \lstset{
-morekeywords={def,fn,ap,impure},
+morekeywords={def,macro,fn,impure},
 morecomment=[l]{;},
 morestring=[b]",
 basicstyle=\ttfamily\small,
@@ -94,14 +94,14 @@ escapeinside={<<}{>>}
     \begin{figure}[h]
         \centering
         \begin{align*}
-            \text{(Context)}\quad&\dfrac{a\Downarrow i}{\langle a,\Gamma\rangle\Downarrow\langle i,\Gamma\rangle}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow\lambda x.i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle i[x/j]\rangle\Downarrow v}{\langle\lstinline$(ap a b)$,\Gamma\rangle\Downarrow v}\quad&\text{(Apply-Function)}\\
-            \text{(Macro)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(a e)$,\Gamma\rangle\Downarrow i(e)}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow\pi i\qquad\langle b,\Gamma\rangle\Downarrow j\qquad\langle j(i)\rangle\Downarrow\pi v}{\langle\lstinline$(ap a b)$,\Gamma\rangle\Downarrow\pi v}\quad&\text{(Apply-Impure)}\\
-            \text{(Function)}\quad&\dfrac{}{\lstinline$(fn x a)$\Downarrow\lambda x.a}
-            &\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(def x a)$,\Gamma\rangle\Downarrow\langle i,\Gamma(x) = i\rangle}\quad&\text{(Define)}\\
-            \text{(Impure)}\quad&\dfrac{\langle a,\Gamma\rangle\Downarrow i}{\langle\lstinline$(impure a)$,\Gamma\rangle\Downarrow\pi i}
-            &\dfrac{}{\langle a,\Gamma\rangle\Downarrow\Gamma(a)}\quad&\text{(Symbol)}
+            \text{(Function)}\;&\dfrac{}{\lstinline$(fn x e)$\Downarrow\lambda x.e}
+            &\dfrac{\langle f,\Gamma\rangle\Downarrow\lambda x.e\qquad\langle a,\Gamma\rangle\Downarrow i\qquad\langle e[x/i]\rangle\Downarrow v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow v}\;&\text{(Apply-Function)}\\
+            \text{(Impure)}\;&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(impure e)$,\Gamma\rangle\Downarrow\pi v}
+            &\dfrac{\langle f,\Gamma\rangle\Downarrow\pi e\qquad\langle a,\Gamma\rangle\Downarrow i\qquad\langle i(e)\rangle\Downarrow\pi v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow\pi v}\;&\text{(Apply-Impure)}\\
+            \text{(Macro)}\;&\dfrac{\langle x,\Gamma\rangle\Downarrow v}{\langle\lstinline$(macro x)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x)\in\mathbb{M}\rangle}
+            &\dfrac{\Gamma(m)\in\mathbb{M}\quad\langle m,\Gamma\rangle\Downarrow f\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\lstinline$(m e)$,\Gamma\rangle\Downarrow v}\;&\text{(Apply-Macro)}\\
+            \text{(Define)}\;&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(def x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\rangle}
+            &\dfrac{}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}\;&\text{(Symbol)}
         \end{align*}
         \caption{The natural semantics of M.}
     \end{figure}
@@ -128,7 +128,7 @@ escapeinside={<<}{>>}
         When applied, they perform the substitution $\lstinline{value}\left[\lstinline{name}/\lstinline{argument}\right]$.
         \newline
 
-        \subsection{Impure}\label{subsec:do}
+        \subsection{Impure}\label{subsec:impure}
 
         Impure expressions are expressions of the form \lstinline$(impure value)$
         They evaluate to a process $\pi\lstinline{value}$.
@@ -136,18 +136,19 @@ escapeinside={<<}{>>}
         If the result of application is not a process, they evaluate to $\bot$ instead.
         \newline
 
-        \subsection{Apply}\label{subsec:apply}
-
-        Apply expressions are expressions of the form \lstinline$(ap value argument)$.
-        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:function}.
-        If \lstinline$value$ is a process, it performs application as described in section~\ref{subsec:do}.
-        \newline
-
         \subsection{Macro}\label{subsec:macro}
 
-        Macro expressions are expressions of the form \lstinline$(name expression)$.
-        Before evaluation, they evaluate \lstinline$name$ and apply it to \lstinline$expression$, replacing themselves with the result.
-        The \lstinline$expression$ is encoded as a coproduct of a symbol and a list as described in section~\ref{sec:encodings}.
+        Macro expressions are expressions of the form \lstinline$(macro name)$.
+        They state that all symbols \lstinline$name$ are macros, and evaluate to the value of \lstinline$name$.
+        When applied, macros evaluate \lstinline$name$ and apply it to the expression encoding of \lstinline$argument$, then evaluate the result.
+        \newline
+
+        \subsection{Apply}\label{subsec:apply}
+
+        Apply expressions are expressions of the form \lstinline$(value argument)$.
+        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:function}.
+        If \lstinline$value$ is a process, it performs application as described in section~\ref{subsec:impure}.
+        If \lstinline$value$ is a macro, it performs application as described in section~\ref{subsec:macro}
         \newline
     \end{multicols}
     \newpage

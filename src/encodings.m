@@ -5,7 +5,7 @@
 (def compose
   (fn f g
     (fn x
-      (ap f g x))))
+      (f g x))))
 
 (def const
   (fn x
@@ -26,66 +26,66 @@
 (def pair
   (fn first second
     (fn value
-      (ap value first second))))
+      (value first second))))
 
 (def first
   (fn pair
-    (ap pair true)))
+    (pair true)))
 
 (def second
   (fn pair
-    (ap pair false)))
+    (pair false)))
 
 ;;; Coproducts
 
 (def left
   (fn value
     (fn first ""
-      (ap first value))))
+      (first value))))
 
 (def right
   (fn value
     (fn "" second
-      (ap second value))))
+      (second value))))
 
 
 
 
 (def left?
   (fn either
-    (ap either
-      (ap const true)
-      (ap const false))))
+    (either
+      (const true)
+      (const false))))
 
 (def right?
   (fn either
-    (ap either
-      (ap const false)
-      (ap const true))))
+    (either
+      (const false)
+      (const true))))
 
 ;;; Lists
 
-(def nil (ap left false))
-(def cons (ap compose right pair))
+(def nil (left false))
+(def cons (compose right pair))
 
 (def car
   (fn value
-    (ap list id left)))
+    (list id left)))
 
 (def cdr
   (fn list
-    (ap list id right)))
+    (list id right)))
 
 (def nil? left?)
 
 ;;; Natural Numbers
 
-(def 0 (ap left id))
+(def 0 (left id))
 (def 0? left?)
 (def inc right)
 (def dec
   (fn nat
-    (ap nat left id)))
+    (nat left id)))
 
 ;;; Chars
 
