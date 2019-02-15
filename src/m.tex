@@ -56,36 +56,48 @@ escapeinside={<<}{>>}
     \begin{multicols}{2}
         \subsection{Characters}\label{subsec:characters}
 
-        M can use any character set which encodes the four special characters, a backslash, a newline character, and a whitespace character.
-        For consistency, all M code samples in this specification use the ASCII character set.
+        \begin{minipage}{\columnwidth}
+            M can use any character set which encodes the four special characters, a backslash, a newline character, and a whitespace character.
+            For consistency, all M code samples in this specification use the ASCII character set.
+        \end{minipage}
 
         \subsection{Specials}\label{subsec:specials}
 
-        The four special characters are reserved for use in other productions.
-        This is done to ensure that symbols such as \lstinline$this()$ do not include any special characters which are meant be used for other syntactic constructs.
-        Note that the backslash is not included in the list of special characters as it is only used inside of a literal symbol.
+        \begin{minipage}{\columnwidth}
+            The four special characters are reserved for use in other productions.
+            This is done to ensure that symbols such as \lstinline$this()$ do not include any special characters which are meant be used for other syntactic constructs.
+            Note that the backslash is not included in the list of special characters as it is only used inside of a literal symbol.
+        \end{minipage}
 
         \subsection{Comments}\label{subsec:comments}
 
-        Comments in M begin with a semicolon and last until the end of the line.
-        They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code.
+        \begin{minipage}{\columnwidth}
+            Comments in M begin with a semicolon and last until the end of the line.
+            They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code.
+        \end{minipage}
 
         \subsection{Symbols}\label{subsec:symbols}
 
-        Symbols in M have two forms, inline and literal.
-        Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default.
-        Literal symbols are escapable strings surrounded by quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbol \lstinline$"()"$).
+        \begin{minipage}{\columnwidth}
+            Symbols in M have two forms, inline and literal.
+            Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default.
+            Literal symbols are escapable strings surrounded by quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbol \lstinline$"()"$).
+        \end{minipage}
 
         \subsection{Expressions}\label{subsec:expressions}
 
-        Expressions in M have two forms, symbols and lists.
-        Symbol expressions are identical to symbols defined in section~\ref{subsec:symbols}.
-        Lists expressions are simply lists of expressions surrounded by matching parentheses.
+        \begin{minipage}{\columnwidth}
+            Expressions in M have two forms, symbols and lists.
+            Symbol expressions are identical to symbols defined in section~\ref{subsec:symbols}.
+            Lists expressions are simply lists of expressions surrounded by matching parentheses.
+        \end{minipage}
 
         \subsection{Programs}\label{subsec:programs}
 
-        M programs are lists of expressions.
-        It is unspecified how these expressions are stored, so they can be in memory, in a single file, in multiple files, on the internet, or any other method which is convenient.
+        \begin{minipage}{\columnwidth}
+            M programs are lists of expressions.
+            It is unspecified how these expressions are stored, so they can be in memory, in a single file, in multiple files, on the internet, or any other method which is convenient.
+        \end{minipage}
     \end{multicols}
     \newpage
 
@@ -94,62 +106,56 @@ escapeinside={<<}{>>}
     \begin{figure}[h]
         \centering
         \begin{align*}
+            \text{(Symbol)}&\dfrac{}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}
+            &\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(macro x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\in\mathbb{M}\rangle}&\text{(Macro)}\\
             \text{(Function)}&\dfrac{}{\lstinline$(fn x e)$\Downarrow\lambda x.e}
-            &\dfrac{\Gamma(m)\in\mathbb{M}\quad\langle m,\Gamma\rangle\Downarrow f\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\lstinline$(m e)$,\Gamma\rangle\Downarrow v}&\text{(Apply-Macro)}\\
-            \text{(Impure)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(impure e)$,\Gamma\rangle\Downarrow\pi v}
             &\dfrac{\langle f,\Gamma\rangle\Downarrow\lambda x.e\quad\langle a,\Gamma\rangle\Downarrow i\quad\langle e[x/i]\rangle\Downarrow v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow v}&\text{(Apply-Function)}\\
             \text{(Define)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(def x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\notin\mathbb{M}\rangle}
-            &\dfrac{\langle f,\Gamma\rangle\Downarrow\pi e\quad\langle a,\Gamma\rangle\Downarrow i\quad\langle i(e)\rangle\Downarrow\pi v}{\langle\lstinline$(f a)$,\Gamma\rangle\Downarrow\pi v}&\text{(Apply-Impure)}\\
-            \text{(Macro)}&\dfrac{\langle e,\Gamma\rangle\Downarrow v}{\langle\lstinline$(macro x e)$,\Gamma\rangle\Downarrow\langle v,\Gamma(x) = v\in\mathbb{M}\rangle}
-            &\dfrac{}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}&\text{(Symbol)}
+            &\dfrac{\Gamma(m)\in\mathbb{M}\quad\langle m,\Gamma\rangle\Downarrow f\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\lstinline$(m e)$,\Gamma\rangle\Downarrow v}&\text{(Apply-Macro)}
         \end{align*}
         \caption{The natural semantics of M.}
     \end{figure}
 
     \begin{multicols}{2}
-        \subsection{Define}\label{subsec:def}
-
-        Def expressions are expressions of the form \lstinline$(def name value)$.
-        They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the the \lstinline$value$ they define.
-        Multiple def expressions with the same \lstinline$name$ are invalid.
-        \newline
-
         \subsection{Symbol}\label{subsec:symbol}
 
-        Symbol expressions are expressions of the form \lstinline$name$.
-        They always evaluate to the \lstinline$value$ of the def expression that defines \lstinline$name$.
-        If \lstinline$name$ is not defined, they evaluate to $\bot$.
-        \newline
+        \begin{minipage}{\columnwidth}
+            Symbol expressions are expressions of the form \lstinline$name$.
+            They always evaluate to the \lstinline$value$ of the def expression that defines \lstinline$name$.
+            If \lstinline$name$ is not defined, they evaluate to $\bot$.
+        \end{minipage}
 
         \subsection{Function}\label{subsec:function}
 
-        Function expressions are expressions of the form \lstinline$(fn name value)$.
-        They evaluate to a function $\lambda\lstinline{name}.\lstinline{value}$.
-        When applied, they perform the substitution $\lstinline{value}\left[\lstinline{name}/\lstinline{argument}\right]$.
-        \newline
+        \begin{minipage}{\columnwidth}
+            Function expressions are expressions of the form \lstinline$(fn name value)$.
+            They evaluate to a function $\lambda\lstinline{name}.\lstinline{value}$.
+            When applied, they perform the substitution $\lstinline{value}\left[\lstinline{name}/\lstinline{argument}\right]$.
+        \end{minipage}
 
-        \subsection{Impure}\label{subsec:impure}
+        \subsection{Define}\label{subsec:def}
 
-        Impure expressions are expressions of the form \lstinline$(impure value)$
-        They evaluate to a process $\pi\lstinline{value}$.
-        When applied, they apply their \lstinline$argument$ to \lstinline$value$.
-        If the result of application is not a process, they evaluate to $\bot$ instead.
-        \newline
+        \begin{minipage}{\columnwidth}
+            Def expressions are expressions of the form \lstinline$(def name value)$.
+            They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the the \lstinline$value$ they define.
+            Multiple def expressions with the same \lstinline$name$ are invalid.
+        \end{minipage}
 
         \subsection{Macro}\label{subsec:macro}
 
-        Macro expressions are expressions of the form \lstinline$(macro name value)$.
-        They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the value of \lstinline$name$.
-        When applied, macros evaluate \lstinline$name$ and apply it to the expression encoding of \lstinline$argument$, then evaluate the result.
-        \newline
+        \begin{minipage}{\columnwidth}
+            Macro expressions are expressions of the form \lstinline$(macro name value)$.
+            They state that all symbols \lstinline$name$ evaluate to \lstinline$value$, and evaluate to the value of \lstinline$name$.
+            When applied, macros evaluate \lstinline$name$ and apply it to the expression encoding of \lstinline$argument$, then evaluate the result.
+        \end{minipage}
 
         \subsection{Apply}\label{subsec:apply}
 
-        Apply expressions are expressions of the form \lstinline$(value argument)$.
-        If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:function}.
-        If \lstinline$value$ is a process, it performs application as described in section~\ref{subsec:impure}.
-        If \lstinline$value$ is a macro, it performs application as described in section~\ref{subsec:macro}
-        \newline
+        \begin{minipage}{\columnwidth}
+            Apply expressions are expressions of the form \lstinline$(value argument)$.
+            If \lstinline$value$ is a function, it performs application as described in section~\ref{subsec:function}.
+            If \lstinline$value$ is a macro, it performs application as described in section~\ref{subsec:macro}
+        \end{minipage}
     \end{multicols}
     \newpage
 
