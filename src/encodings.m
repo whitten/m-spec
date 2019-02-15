@@ -2,11 +2,6 @@
 
 (def id (fn x x))
 
-(def compose
-  (fn f g
-    (fn x
-      (f g x))))
-
 (def const
   (fn x
     (fn "" x)))
@@ -48,14 +43,13 @@
     (fn "" second
       (second value))))
 
-
-
-
 (def left?
   (fn either
     (either
       (const true)
       (const false))))
+
+
 
 (def right?
   (fn either
@@ -66,7 +60,11 @@
 ;;; Lists
 
 (def nil (left false))
-(def cons (compose right pair))
+
+(def cons
+  (fn car
+    (fn cdr
+      (right (pair car cdr)))))
 
 (def car
   (fn value
