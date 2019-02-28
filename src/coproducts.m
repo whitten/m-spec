@@ -2,22 +2,22 @@
 
 (def left
   (fn value
-    (fn first ""
+    (fn first _
       (first value))))
 
 (def right
   (fn value
-    (fn "" second
+    (fn _ second
       (second value))))
 
 (def left?
   (fn either
     (either
-      (const true)
-      (const false))))
+      (fn _ true)
+      (fn _ false))))
 
 (def right?
   (fn either
     (either
-      (const false)
-      (const true))))
+      (fn _ false)
+      (fn _ true))))

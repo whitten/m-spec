@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 <h1 id="sec:syntax">Syntax</h1>
 <p><span class="math display">\begin{aligned}
-            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\\
+            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\;\text{such that}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
             &amp;\texttt{special}   &amp;=&amp;\;\{\texttt{`;&#39;},\texttt{`&quot;&#39;},\texttt{`(&#39;},\texttt{`)&#39;}\}\\
             &amp;\texttt{comment}   &amp;=&amp;\;\texttt{`;&#39;}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &amp;\texttt{symbol}    &amp;=&amp;\;\texttt{(character - special - whitespace)*}\\
@@ -105,17 +105,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             &amp;\texttt{program}   &amp;=&amp;\;\texttt{expression*}
         \end{aligned}</span></p>
 <h2 id="subsec:characters">Characters</h2>
-<p>M can use any character set which encodes the four special characters, a backslash, a newline character, and a whitespace character. For consistency, all M code samples in this specification use the ASCII character set.</p>
+<p>M can use any character set which encodes the four special characters, a newline character, and a whitespace character. To allow for simple source termination, the null character is not allowed in M code. For consistency, all M code samples in this specification use the ASCII character set.</p>
 <h2 id="subsec:specials">Specials</h2>
-<p>The four special characters are reserved for use in other productions. This is done to ensure that symbols such as <code>this()</code> do not include any special characters which are meant be used for other syntactic constructs. Note that the backslash is not included in the list of special characters as it is only used inside of a literal symbol.</p>
+<p>The four special characters are reserved for use in non-symbol syntax. This is done to ensure that symbols do not include any characters which are meant be used in other syntactic constructs. For example, if the special characters were not reserved, the expression <code>(symbol)</code> would be parsed as <code>("symbol)"</code> rather than <code>("symbol")</code>.</p>
 <h2 id="subsec:comments">Comments</h2>
-<p>Comments in M begin with a semicolon and last until the end of the line. They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code.</p>
+<p>Comments in M begin with a semicolon and last until the end of the line. They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code. M does not provide multiline comments, as comments are not meant to be used for documentation.</p>
 <h2 id="subsec:symbols">Symbols</h2>
-<p>Symbols in M have two forms, inline and literal. Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default. Literal symbols are strings surrounded by one or two quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbol <code>"()"</code>).</p>
+<p>Symbols in M have two forms, inline and literal. Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default. Literal symbols are strings surrounded by one or two quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbols <code>"()"</code> and <code>"""""</code>).</p>
 <h2 id="subsec:expressions">Expressions</h2>
-<p>Expressions in M have two forms, symbols and lists. Symbol expressions are identical to symbols defined in section <a href="#subsec:symbols" data-reference-type="ref" data-reference="subsec:symbols">1.4</a>. Lists expressions are simply lists of expressions surrounded by matching parentheses.</p>
+<p>Expressions in M have two forms, symbols and lists. Symbol expressions are symbols as defined in section <a href="#subsec:symbols" data-reference-type="ref" data-reference="subsec:symbols">1.4</a>. Lists expressions are lists of expressions surrounded by matching parentheses.</p>
 <h2 id="subsec:programs">Programs</h2>
-<p>M programs are lists of expressions. It is unspecified how these expressions are stored, so they can be in memory, in a single file, in multiple files, on the internet, or any other method which is convenient.</p>
+<p>M programs are lists of expressions. Note that there is no terminator specified for M programs, nor a separator for expressions, so M programs are not restricted to a single file or a null-terminated string.</p>
 <h1 id="sec:semantics">Semantics</h1>
 <p><span class="math display">\begin{aligned}
             \text{(Symbol)}\;&amp;\frac{\;}{\langle x,\Gamma\rangle\Downarrow\Gamma(x)}
@@ -126,9 +126,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             &amp;\frac{\Gamma(m)=(f,\top)\quad\langle f(e),\Gamma\rangle\Downarrow v}{\langle\texttt{(m e)},\Gamma\rangle\Downarrow v}&amp;\;\text{(Apply-Macro)}
         \end{aligned}</span></p>
 <h2 id="subsec:symbol">Symbol</h2>
-<p>Symbol expressions are expressions of the form <code>name</code>. They always evaluate to the <code>value</code> of the def expression that defines <code>name</code>. If <code>name</code> is not defined, they evaluate to <span class="math inline">\bot</span>.</p>
+<p>Symbol expressions are expressions of the form <code>name</code>. They always evaluate to the <code>value</code> of the def expression that defines <code>name</code>. If <code>name</code> is not defined, they evaluate to <span class="math inline">\bot</span> instead.</p>
 <h2 id="subsec:function">Function</h2>
-<p>Function expressions are expressions of the form <code>(def name value)</code>. They evaluate to a function <span class="math inline">\lambda</span><code>name</code>.<code>value</code>. When applied, they perform the substitution <code>value</code>[<code>name</code>/<code>argument</code>].</p>
+<p>Function expressions are expressions of the form <code>(fn name value)</code>. They evaluate to a function <span class="math inline">\lambda</span><code>name</code>.<code>value</code>. When applied, they perform the substitution <code>value</code>[<code>name</code>/<code>argument</code>].</p>
 <h2 id="subsec:def">Define</h2>
 <p>Def expressions are expressions of the form <code>(def name value)</code>. They state that all symbols <code>name</code> evaluate to <code>value</code>, and evaluate to the the <code>value</code> they define. Multiple def expressions with the same <code>name</code> are invalid.</p>
 <h2 id="subsec:macro">Macro</h2>
@@ -136,103 +136,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="subsec:apply">Apply</h2>
 <p>Apply expressions are expressions of the form <code>(value argument)</code>. If <code>value</code> is a function, it performs application as described in section <a href="#subsec:function" data-reference-type="ref" data-reference="subsec:function">2.2</a>. If <code>value</code> is a macro, it performs application as described in section <a href="#subsec:macro" data-reference-type="ref" data-reference="subsec:macro">2.4</a></p>
 <h1 id="sec:encodings">Encodings</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb1-1" title="1"><span class="co">;;; Functions</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb1-1" title="1"><span class="co">;;; Booleans</span></a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">(<span class="kw">def</span> id (<span class="kw">fn</span> x x))</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5">(<span class="kw">def</span> const</a>
-<a class="sourceLine" id="cb1-6" title="6">  (<span class="kw">fn</span> x</a>
-<a class="sourceLine" id="cb1-7" title="7">    (<span class="kw">fn</span> &quot;&quot; x)))</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb2-1" title="1"><span class="co">;;; Booleans</span></a>
+<a class="sourceLine" id="cb1-3" title="3">(<span class="kw">def</span> true</a>
+<a class="sourceLine" id="cb1-4" title="4">  (<span class="kw">fn</span> x</a>
+<a class="sourceLine" id="cb1-5" title="5">    (<span class="kw">fn</span> _ x)))</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">(<span class="kw">def</span> false</a>
+<a class="sourceLine" id="cb1-8" title="8">  (<span class="kw">fn</span> _</a>
+<a class="sourceLine" id="cb1-9" title="9">    (<span class="kw">fn</span> x x)))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb2-1" title="1"><span class="co">;;; Products</span></a>
 <a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3">(<span class="kw">def</span> true</a>
-<a class="sourceLine" id="cb2-4" title="4">  (<span class="kw">fn</span> x</a>
-<a class="sourceLine" id="cb2-5" title="5">    (<span class="kw">fn</span> &quot;&quot; x)))</a>
-<a class="sourceLine" id="cb2-6" title="6"></a>
-<a class="sourceLine" id="cb2-7" title="7">(<span class="kw">def</span> false</a>
-<a class="sourceLine" id="cb2-8" title="8">  (<span class="kw">fn</span> &quot;&quot;</a>
-<a class="sourceLine" id="cb2-9" title="9">    (<span class="kw">fn</span> x x)))</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb3-1" title="1"><span class="co">;;; Products</span></a>
+<a class="sourceLine" id="cb2-3" title="3">(<span class="kw">def</span> pair</a>
+<a class="sourceLine" id="cb2-4" title="4">  (<span class="kw">fn</span> first second</a>
+<a class="sourceLine" id="cb2-5" title="5">    (<span class="kw">fn</span> value</a>
+<a class="sourceLine" id="cb2-6" title="6">      (value first second))))</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">(<span class="kw">def</span> first</a>
+<a class="sourceLine" id="cb2-9" title="9">  (<span class="kw">fn</span> pair</a>
+<a class="sourceLine" id="cb2-10" title="10">    (pair true)))</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12">(<span class="kw">def</span> second</a>
+<a class="sourceLine" id="cb2-13" title="13">  (<span class="kw">fn</span> pair</a>
+<a class="sourceLine" id="cb2-14" title="14">    (pair false)))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb3-1" title="1"><span class="co">;;; Coproducts</span></a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">(<span class="kw">def</span> pair</a>
-<a class="sourceLine" id="cb3-4" title="4">  (<span class="kw">fn</span> first second</a>
-<a class="sourceLine" id="cb3-5" title="5">    (<span class="kw">fn</span> value</a>
-<a class="sourceLine" id="cb3-6" title="6">      (value first second))))</a>
+<a class="sourceLine" id="cb3-3" title="3">(<span class="kw">def</span> left</a>
+<a class="sourceLine" id="cb3-4" title="4">  (<span class="kw">fn</span> value</a>
+<a class="sourceLine" id="cb3-5" title="5">    (<span class="kw">fn</span> first _</a>
+<a class="sourceLine" id="cb3-6" title="6">      (first value))))</a>
 <a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8">(<span class="kw">def</span> first</a>
-<a class="sourceLine" id="cb3-9" title="9">  (<span class="kw">fn</span> pair</a>
-<a class="sourceLine" id="cb3-10" title="10">    (pair true)))</a>
-<a class="sourceLine" id="cb3-11" title="11"></a>
-<a class="sourceLine" id="cb3-12" title="12">(<span class="kw">def</span> second</a>
-<a class="sourceLine" id="cb3-13" title="13">  (<span class="kw">fn</span> pair</a>
-<a class="sourceLine" id="cb3-14" title="14">    (pair false)))</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb4-1" title="1"><span class="co">;;; Coproducts</span></a>
+<a class="sourceLine" id="cb3-8" title="8">(<span class="kw">def</span> right</a>
+<a class="sourceLine" id="cb3-9" title="9">  (<span class="kw">fn</span> value</a>
+<a class="sourceLine" id="cb3-10" title="10">    (<span class="kw">fn</span> _ second</a>
+<a class="sourceLine" id="cb3-11" title="11">      (second value))))</a>
+<a class="sourceLine" id="cb3-12" title="12"></a>
+<a class="sourceLine" id="cb3-13" title="13">(<span class="kw">def</span> left?</a>
+<a class="sourceLine" id="cb3-14" title="14">  (<span class="kw">fn</span> either</a>
+<a class="sourceLine" id="cb3-15" title="15">    (either</a>
+<a class="sourceLine" id="cb3-16" title="16">      (<span class="kw">fn</span> _ true)</a>
+<a class="sourceLine" id="cb3-17" title="17">      (<span class="kw">fn</span> _ false))))</a>
+<a class="sourceLine" id="cb3-18" title="18"></a>
+<a class="sourceLine" id="cb3-19" title="19">(<span class="kw">def</span> right?</a>
+<a class="sourceLine" id="cb3-20" title="20">  (<span class="kw">fn</span> either</a>
+<a class="sourceLine" id="cb3-21" title="21">    (either</a>
+<a class="sourceLine" id="cb3-22" title="22">      (<span class="kw">fn</span> _ false)</a>
+<a class="sourceLine" id="cb3-23" title="23">      (<span class="kw">fn</span> _ true))))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb4-1" title="1"><span class="co">;;; Lists</span></a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
-<a class="sourceLine" id="cb4-3" title="3">(<span class="kw">def</span> left</a>
-<a class="sourceLine" id="cb4-4" title="4">  (<span class="kw">fn</span> value</a>
-<a class="sourceLine" id="cb4-5" title="5">    (<span class="kw">fn</span> first &quot;&quot;</a>
-<a class="sourceLine" id="cb4-6" title="6">      (first value))))</a>
-<a class="sourceLine" id="cb4-7" title="7"></a>
-<a class="sourceLine" id="cb4-8" title="8">(<span class="kw">def</span> right</a>
-<a class="sourceLine" id="cb4-9" title="9">  (<span class="kw">fn</span> value</a>
-<a class="sourceLine" id="cb4-10" title="10">    (<span class="kw">fn</span> &quot;&quot; second</a>
-<a class="sourceLine" id="cb4-11" title="11">      (second value))))</a>
-<a class="sourceLine" id="cb4-12" title="12"></a>
-<a class="sourceLine" id="cb4-13" title="13">(<span class="kw">def</span> left?</a>
-<a class="sourceLine" id="cb4-14" title="14">  (<span class="kw">fn</span> either</a>
-<a class="sourceLine" id="cb4-15" title="15">    (either</a>
-<a class="sourceLine" id="cb4-16" title="16">      (const true)</a>
-<a class="sourceLine" id="cb4-17" title="17">      (const false))))</a>
-<a class="sourceLine" id="cb4-18" title="18"></a>
-<a class="sourceLine" id="cb4-19" title="19">(<span class="kw">def</span> right?</a>
-<a class="sourceLine" id="cb4-20" title="20">  (<span class="kw">fn</span> either</a>
-<a class="sourceLine" id="cb4-21" title="21">    (either</a>
-<a class="sourceLine" id="cb4-22" title="22">      (const false)</a>
-<a class="sourceLine" id="cb4-23" title="23">      (const true))))</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb5-1" title="1"><span class="co">;;; Lists</span></a>
+<a class="sourceLine" id="cb4-3" title="3">(<span class="kw">def</span> nil (left false))</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5">(<span class="kw">def</span> cons</a>
+<a class="sourceLine" id="cb4-6" title="6">  (<span class="kw">fn</span> car</a>
+<a class="sourceLine" id="cb4-7" title="7">    (<span class="kw">fn</span> cdr</a>
+<a class="sourceLine" id="cb4-8" title="8">      (right (pair car cdr)))))</a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10">(<span class="kw">def</span> car</a>
+<a class="sourceLine" id="cb4-11" title="11">  (<span class="kw">fn</span> value</a>
+<a class="sourceLine" id="cb4-12" title="12">    (list (<span class="kw">fn</span> x x) left)))</a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14">(<span class="kw">def</span> cdr</a>
+<a class="sourceLine" id="cb4-15" title="15">  (<span class="kw">fn</span> list</a>
+<a class="sourceLine" id="cb4-16" title="16">    (list (<span class="kw">fn</span> x x) right)))</a>
+<a class="sourceLine" id="cb4-17" title="17"></a>
+<a class="sourceLine" id="cb4-18" title="18">(<span class="kw">def</span> nil? left?)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb5-1" title="1"><span class="co">;;; Natural Numbers</span></a>
 <a class="sourceLine" id="cb5-2" title="2"></a>
-<a class="sourceLine" id="cb5-3" title="3">(<span class="kw">def</span> nil (left false))</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5">(<span class="kw">def</span> cons</a>
-<a class="sourceLine" id="cb5-6" title="6">  (<span class="kw">fn</span> car</a>
-<a class="sourceLine" id="cb5-7" title="7">    (<span class="kw">fn</span> cdr</a>
-<a class="sourceLine" id="cb5-8" title="8">      (right (pair car cdr)))))</a>
-<a class="sourceLine" id="cb5-9" title="9"></a>
-<a class="sourceLine" id="cb5-10" title="10">(<span class="kw">def</span> car</a>
-<a class="sourceLine" id="cb5-11" title="11">  (<span class="kw">fn</span> value</a>
-<a class="sourceLine" id="cb5-12" title="12">    (list id left)))</a>
-<a class="sourceLine" id="cb5-13" title="13"></a>
-<a class="sourceLine" id="cb5-14" title="14">(<span class="kw">def</span> cdr</a>
-<a class="sourceLine" id="cb5-15" title="15">  (<span class="kw">fn</span> list</a>
-<a class="sourceLine" id="cb5-16" title="16">    (list id right)))</a>
-<a class="sourceLine" id="cb5-17" title="17"></a>
-<a class="sourceLine" id="cb5-18" title="18">(<span class="kw">def</span> nil? left?)</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb6-1" title="1"><span class="co">;;; Natural Numbers</span></a>
+<a class="sourceLine" id="cb5-3" title="3">(<span class="kw">def</span> 0 (left (<span class="kw">fn</span> x x)))</a>
+<a class="sourceLine" id="cb5-4" title="4">(<span class="kw">def</span> 0? left?)</a>
+<a class="sourceLine" id="cb5-5" title="5">(<span class="kw">def</span> inc right)</a>
+<a class="sourceLine" id="cb5-6" title="6">(<span class="kw">def</span> dec</a>
+<a class="sourceLine" id="cb5-7" title="7">  (<span class="kw">fn</span> nat</a>
+<a class="sourceLine" id="cb5-8" title="8">    (nat left (<span class="kw">fn</span> x x))))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb6-1" title="1"><span class="co">;;; Chars</span></a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3">(<span class="kw">def</span> 0 (left id))</a>
-<a class="sourceLine" id="cb6-4" title="4">(<span class="kw">def</span> 0? left?)</a>
-<a class="sourceLine" id="cb6-5" title="5">(<span class="kw">def</span> inc right)</a>
-<a class="sourceLine" id="cb6-6" title="6">(<span class="kw">def</span> dec</a>
-<a class="sourceLine" id="cb6-7" title="7">  (<span class="kw">fn</span> nat</a>
-<a class="sourceLine" id="cb6-8" title="8">    (nat left id)))</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb7-1" title="1"><span class="co">;;; Chars</span></a>
+<a class="sourceLine" id="cb6-3" title="3">(<span class="kw">def</span> nat-&gt;char (<span class="kw">fn</span> x x))</a>
+<a class="sourceLine" id="cb6-4" title="4">(<span class="kw">def</span> char-&gt;nat (<span class="kw">fn</span> x x))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb7-1" title="1"><span class="co">;;; Symbols</span></a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3">(<span class="kw">def</span> nat-&gt;char id)</a>
-<a class="sourceLine" id="cb7-4" title="4">(<span class="kw">def</span> char-&gt;nat id)</a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb8-1" title="1"><span class="co">;;; Symbols</span></a>
+<a class="sourceLine" id="cb7-3" title="3">(<span class="kw">def</span> list-&gt;symbol (<span class="kw">fn</span> x x))</a>
+<a class="sourceLine" id="cb7-4" title="4">(<span class="kw">def</span> symbol-&gt;list (<span class="kw">fn</span> x x))</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb8-1" title="1"><span class="co">;;; Expressions</span></a>
 <a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3">(<span class="kw">def</span> list-&gt;symbol id)</a>
-<a class="sourceLine" id="cb8-4" title="4">(<span class="kw">def</span> symbol-&gt;list id)</a></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb9-1" title="1"><span class="co">;;; Expressions</span></a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3">(<span class="kw">def</span> symbol? left?)</a>
-<a class="sourceLine" id="cb9-4" title="4">(<span class="kw">def</span> list? right?)</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" title="3">(<span class="kw">def</span> symbol? left?)</a>
+<a class="sourceLine" id="cb8-4" title="4">(<span class="kw">def</span> list? right?)</a></code></pre></div>
 <h1 id="sec:implementation">Reference Implementation</h1>
 <h2 id="subsec:parser">Parser</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb10-1" title="1">()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb9-1" title="1">()</a></code></pre></div>
 <h2 id="subsec:interpreter">Interpreter</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb11-1" title="1">()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb10-1" title="1">()</a></code></pre></div>
 <h2 id="subsec:compiler">Compiler</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb12-1" title="1">()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb11-1" title="1">()</a></code></pre></div>
 </body>
 </html>

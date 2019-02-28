@@ -1,4 +1,4 @@
 ;;; Symbols
 
-(def list->symbol id)
-(def symbol->list id)
+(def list->symbol (fn x x))
+(def symbol->list (fn x x))

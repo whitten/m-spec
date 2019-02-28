@@ -9,10 +9,10 @@
 
 (def car
   (fn value
-    (list id left)))
+    (list (fn x x) left)))
 
 (def cdr
   (fn list
-    (list id right)))
+    (list (fn x x) right)))
 
 (def nil? left?)

@@ -34,7 +34,7 @@ showstringspaces=false
     \begin{figure}[h]
         \centering
         \begin{align*}
-            &\texttt{character} &=&\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\\
+            &\texttt{character} &=&\;\mathbb{C}\;\text{such that}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
             &\texttt{special}   &=&\;\{\texttt{`;'},\texttt{`"'},\texttt{`('},\texttt{`)'}\}\\
             &\texttt{comment}   &=&\;\texttt{`;'}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &\texttt{symbol}    &=&\;\texttt{(character - special - whitespace)*}\\
@@ -51,16 +51,17 @@ showstringspaces=false
         \subsection{Characters}\label{subsec:characters}
 
         \begin{minipage}{\columnwidth}
-            M can use any character set which encodes the four special characters, a backslash, a newline character, and a whitespace character.
+            M can use any character set which encodes the four special characters, a newline character, and a whitespace character.
+            To allow for simple source termination, the null character is not allowed in M code.
             For consistency, all M code samples in this specification use the ASCII character set.
         \end{minipage}
 
         \subsection{Specials}\label{subsec:specials}
 
         \begin{minipage}{\columnwidth}
-            The four special characters are reserved for use in other productions.
-            This is done to ensure that symbols such as \lstinline{this()} do not include any special characters which are meant be used for other syntactic constructs.
-            Note that the backslash is not included in the list of special characters as it is only used inside of a literal symbol.
+            The four special characters are reserved for use in non-symbol syntax.
+            This is done to ensure that symbols do not include any characters which are meant be used in other syntactic constructs.
+            For example, if the special characters were not reserved, the expression \texttt{(symbol)} would be parsed as \texttt{("symbol)"} rather than \texttt{("symbol")}.
         \end{minipage}
 
         \subsection{Comments}\label{subsec:comments}
@@ -68,6 +69,7 @@ showstringspaces=false
         \begin{minipage}{\columnwidth}
             Comments in M begin with a semicolon and last until the end of the line.
             They are ignored and discarded like whitespace and newlines, as they are only intended to be used for explaining code.
+            M does not provide multiline comments, as comments are not meant to be used for documentation.
         \end{minipage}
 
         \subsection{Symbols}\label{subsec:symbols}
@@ -75,22 +77,22 @@ showstringspaces=false
         \begin{minipage}{\columnwidth}
             Symbols in M have two forms, inline and literal.
             Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default.
-            Literal symbols are strings surrounded by one or two quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbol \lstinline{"()"}).
+            Literal symbols are strings surrounded by one or two quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbols \texttt{"()"} and \texttt{"""""}).
         \end{minipage}
 
         \subsection{Expressions}\label{subsec:expressions}
 
         \begin{minipage}{\columnwidth}
             Expressions in M have two forms, symbols and lists.
-            Symbol expressions are identical to symbols defined in section~\ref{subsec:symbols}.
-            Lists expressions are simply lists of expressions surrounded by matching parentheses.
+            Symbol expressions are symbols as defined in section~\ref{subsec:symbols}.
+            Lists expressions are lists of expressions surrounded by matching parentheses.
         \end{minipage}
 
         \subsection{Programs}\label{subsec:programs}
 
         \begin{minipage}{\columnwidth}
             M programs are lists of expressions.
-            It is unspecified how these expressions are stored, so they can be in memory, in a single file, in multiple files, on the internet, or any other method which is convenient.
+            Note that there is no terminator specified for M programs, nor a separator for expressions, so M programs are not restricted to a single file or a null-terminated string.
         \end{minipage}
     \end{multicols}
     \newpage
@@ -116,13 +118,13 @@ showstringspaces=false
         \begin{minipage}{\columnwidth}
             Symbol expressions are expressions of the form \texttt{name}.
             They always evaluate to the \texttt{value} of the def expression that defines \texttt{name}.
-            If \texttt{name} is not defined, they evaluate to $\bot$.
+            If \texttt{name} is not defined, they evaluate to $\bot$ instead.
         \end{minipage}
 
         \subsection{Function}\label{subsec:function}
 
         \begin{minipage}{\columnwidth}
-            Function expressions are expressions of the form \lstinline{(def name value)}.
+            Function expressions are expressions of the form \lstinline{(fn name value)}.
             They evaluate to a function $\lambda$\texttt{name}.\texttt{value}.
             When applied, they perform the substitution \texttt{value}[\texttt{name}/\texttt{argument}].
         \end{minipage}
@@ -156,9 +158,6 @@ showstringspaces=false
     \section{Encodings}\label{sec:encodings}
 
     \begin{multicols*}{\comm{2}}
-        \begin{minipage}{\columnwidth}
-            \lstinputlisting{src/functions.m}
-        \end{minipage}
         \begin{minipage}{\columnwidth}
             \lstinputlisting{src/booleans.m}
         \end{minipage}

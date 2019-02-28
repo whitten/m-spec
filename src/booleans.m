@@ -2,8 +2,8 @@
 
 (def true
   (fn x
-    (fn "" x)))
+    (fn _ x)))
 
 (def false
-  (fn ""
+  (fn _
     (fn x x)))
