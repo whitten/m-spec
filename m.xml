@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language version="6" kateversion="5.0" name="Matlab" section="Scripts" extensions="*.m" priority="9">
+    <highlighting>
+        <list name="keywords">
+            <item>def</item>
+            <item>fn</item>
+            <item>macro</item>
+        </list>
+        <contexts>
+            <context name="Default" attribute="Normal" lineEndContext="#stay">
+                <RegExpr attribute="Comment" context="#stay" String=";.*$"/>
+                <keyword attribute="Keyword" context="#stay" String="keywords"/>
+                <DetectChar attribute="Brackets1" context="Level1" char="("/>
+            </context>
+            <context name="MultiLineComment" attribute="Comment" lineEndContext="#stay">
+                <RegExpr attribute="Comment" context="#pop" String="!#\s*$" endRegion="region" column="0"/>
+            </context>
+            <context name="String" attribute="String" lineEndContext="#stay">
+                <DetectChar attribute="String" context="#pop" char="&quot;"/>
+            </context>
+            <context name="Level0" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets1" context="Level1" char="("/>
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level1" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets2" context="Level2" char="("/>
+                <DetectChar attribute="Brackets1" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level2" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets3" context="Level3" char="("/>
+                <DetectChar attribute="Brackets2" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level3" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets4" context="Level4" char="("/>
+                <DetectChar attribute="Brackets3" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level4" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets5" context="Level5" char="("/>
+                <DetectChar attribute="Brackets4" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level5" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets6" context="Level6" char="("/>
+                <DetectChar attribute="Brackets5" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+            <context name="Level6" attribute="Normal" lineEndContext="#stay">
+                <DetectChar attribute="Brackets1" context="Level1" char="("/>
+                <DetectChar attribute="Brackets6" context="#pop" char=")" />
+                <IncludeRules context="Default" />
+            </context>
+        </contexts>
+        <itemDatas>
+            <itemData name="Normal"      defStyleNum="dsNormal"/>
+            <itemData name="Keyword"     defStyleNum="dsKeyword"/>
+            <itemData name="String"      defStyleNum="dsString"/>
+            <itemData name="Comment"     defStyleNum="dsComment"/>
+            <itemData name="Brackets1"    defStyleNum="dsNormal" color="#ff0000" bold="1"/>
+            <itemData name="Brackets2"    defStyleNum="dsNormal" color="#ff8800" bold="1"/>
+            <itemData name="Brackets3"    defStyleNum="dsNormal" color="#888800" bold="1"/>
+            <itemData name="Brackets4"    defStyleNum="dsNormal" color="#008800" bold="1"/>
+            <itemData name="Brackets5"    defStyleNum="dsNormal" color="#000088" bold="1"/>
+            <itemData name="Brackets6"    defStyleNum="dsNormal" color="#880088" bold="1"/>
+        </itemDatas>
+    </highlighting>
+    <general>
+        <keywords casesensitive="1"/>
+        <comments>
+            <comment name="singleLine" start=";" />
+        </comments>
+    </general>
+</language>
