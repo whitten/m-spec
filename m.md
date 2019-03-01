@@ -9,11 +9,17 @@ more complex; programs become difficult to reason about for humans and
 computers alike, and maintaining a compliant, feature-rich software
 stack becomes impossible.
 
+Simplicity is required for a programming language to be useful; and when
+writing simple programs, most programming languages are. It is when
+programs get more complex, be it for performance or for abstraction,
+that simplicity is discarded; complex extensions are used, edge cases
+are abused, and exceptions to rules become the norm.
+
 M is not just a simple programming language — the
 ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
 "\\lambda")-Calculus is far simpler than M is. M is a simple programming
 language which can express the extensions provided by practical
-programming languages *without* extending the specification.
+programming languages without additional complexity.
 
 To do this, M implements the
 ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
