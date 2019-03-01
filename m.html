@@ -92,16 +92,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">The M Specification</h1>
 <p class="author">Aedan Smith</p>
 </header>
+<h1 id="sec:introduction">Introduction</h1>
+<p>There has always been a clear separation between practical programming languages and mathematical programming constructs. Even languages such as ML and Scheme, though rooted in mathematics, have unnecessary or impure extensions for convenience and performance. While these extensions improve the language in some ways, they also make it much more complex; programs become difficult to reason about for humans and computers alike, and maintaining a compliant, feature-rich software stack becomes impossible.</p>
+<p>M is <em>not</em> a simple programming language — the <span class="math inline">\lambda</span>-Calculus is far simpler than M is. M is a simple programming language which can express the extensions provided by practical programming languages <em>without</em> extending the specification.</p>
+<p>To do this, M implements the <span class="math inline">\lambda</span>-Calculus as a lisp with the following properties:</p>
+<ol>
+<li><p><span class="math inline">\forall f, x\in\mathbb{F}:\;f(x)=f(x)</span> (All functions are pure)</p></li>
+<li><p><span class="math inline">\forall a, b\in\mathbb{E},\;\exists f\in\mathbb{F}:\;f(a)=b</span> (Any two expressions can be made equivalent with a macro)</p></li>
+<li><p><span class="math inline">\forall a, b\in\mathbb{P},\;\forall x\in\mathbb{D}:\;\neg(x\in a\land x\in b)\implies a\cup b\in\mathbb{P}</span> (Any two programs can be combined given that they do not duplicate definitions)</p></li>
+</ol>
+<p>The usefulness of these properties will be explored in section <a href="#sec:practical" data-reference-type="ref" data-reference="sec:practical">5</a>, but first the language itself must be defined.</p>
 <h1 id="sec:syntax">Syntax</h1>
 <p><span class="math display">\begin{aligned}
-            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\;\text{such that}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\;\text{where}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
             &amp;\texttt{special}   &amp;=&amp;\;\{\texttt{`;&#39;},\texttt{`&quot;&#39;},\texttt{`(&#39;},\texttt{`)&#39;}\}\\
             &amp;\texttt{comment}   &amp;=&amp;\;\texttt{`;&#39;}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &amp;\texttt{symbol}    &amp;=&amp;\;\texttt{(character - special - whitespace)*}\\
-            &amp; &amp;|&amp;\;\texttt{`&quot;&#39;}\quad\texttt{character*}\quad\texttt{`&quot;&#39;}\\
-            &amp; &amp;|&amp;\;\texttt{`&quot;&quot;&#39;}\quad\texttt{character*}\quad\texttt{`&quot;&quot;&#39;}\\
+            &amp;                   &amp;|&amp;\;\texttt{`&quot;&#39;}\quad\texttt{character*}\quad\texttt{`&quot;&#39;}\\
+            &amp;                   &amp;|&amp;\;\texttt{`&quot;&quot;&#39;}\quad\texttt{character*}\quad\texttt{`&quot;&quot;&#39;}\\
             &amp;\texttt{expression}&amp;=&amp;\;\texttt{symbol}\\
-            &amp; &amp;|&amp;\;\texttt{`(&#39;}\quad\texttt{expression*}\quad\texttt{`)&#39;}\\
+            &amp;                   &amp;|&amp;\;\texttt{`(&#39;}\quad\texttt{expression*}\quad\texttt{`)&#39;}\\
             &amp;\texttt{program}   &amp;=&amp;\;\texttt{expression*}
         \end{aligned}</span></p>
 <h2 id="subsec:characters">Characters</h2>
@@ -113,7 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="subsec:symbols">Symbols</h2>
 <p>Symbols in M have two forms, inline and literal. Inline symbols are strings terminated by whitespace or a special symbol, and should be used by default. Literal symbols are strings surrounded by one or two quotes, and should only be used when a symbol is impossible to represent using inline symbols (for example, the symbols <code>"()"</code> and <code>"""""</code>).</p>
 <h2 id="subsec:expressions">Expressions</h2>
-<p>Expressions in M have two forms, symbols and lists. Symbol expressions are symbols as defined in section <a href="#subsec:symbols" data-reference-type="ref" data-reference="subsec:symbols">1.4</a>. Lists expressions are lists of expressions surrounded by matching parentheses.</p>
+<p>Expressions in M have two forms, symbols and lists. Symbol expressions are symbols as defined in section <a href="#subsec:symbols" data-reference-type="ref" data-reference="subsec:symbols">2.4</a>. Lists expressions are lists of expressions surrounded by matching parentheses.</p>
 <h2 id="subsec:programs">Programs</h2>
 <p>M programs are lists of expressions. Note that there is no terminator specified for M programs, nor a separator for expressions, so M programs are not restricted to a single file or a null-terminated string.</p>
 <h1 id="sec:semantics">Semantics</h1>
@@ -134,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="subsec:macro">Macro</h2>
 <p>Macro expressions are expressions of the form <code>(macro name value)</code>. They state that all symbols <code>name</code> evaluate to <code>value</code>, and evaluate to the value of <code>name</code>. When applied, macros evaluate <code>name</code> and apply it to the expression encoding of <code>argument</code>, then evaluate the result.</p>
 <h2 id="subsec:apply">Apply</h2>
-<p>Apply expressions are expressions of the form <code>(value argument)</code>. If <code>value</code> is a function, it performs application as described in section <a href="#subsec:function" data-reference-type="ref" data-reference="subsec:function">2.2</a>. If <code>value</code> is a macro, it performs application as described in section <a href="#subsec:macro" data-reference-type="ref" data-reference="subsec:macro">2.4</a></p>
+<p>Apply expressions are expressions of the form <code>(value argument)</code>. If <code>value</code> is a function, it performs application as described in section <a href="#subsec:function" data-reference-type="ref" data-reference="subsec:function">3.2</a>. If <code>value</code> is a macro, it performs application as described in section <a href="#subsec:macro" data-reference-type="ref" data-reference="subsec:macro">3.4</a></p>
 <h1 id="sec:encodings">Encodings</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb1-1" title="1"><span class="co">;;; Booleans</span></a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
@@ -220,6 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb8-2" title="2"></a>
 <a class="sourceLine" id="cb8-3" title="3">(<span class="kw">def</span> symbol? left?)</a>
 <a class="sourceLine" id="cb8-4" title="4">(<span class="kw">def</span> list? right?)</a></code></pre></div>
+<h1 id="sec:practical">Practical M</h1>
 <h1 id="sec:implementation">Reference Implementation</h1>
 <h2 id="subsec:parser">Parser</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode matlab"><code class="sourceCode m"><a class="sourceLine" id="cb9-1" title="1">()</a></code></pre></div>

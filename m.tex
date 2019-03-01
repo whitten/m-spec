@@ -5,8 +5,6 @@
 \title{The M Specification}
 \author{Aedan Smith}
 
-\setlength{\parindent}{0in}
-
 \lstset{
 morekeywords={def,macro,fn},
 morecomment=[l]{;},
@@ -29,19 +27,39 @@ showstringspaces=false
     \tableofcontents
     \newpage
 
+    \section{Introduction}\label{sec:introduction}
+
+    There has always been a clear separation between practical programming languages and mathematical programming constructs.
+    Even languages such as ML and Scheme, though rooted in mathematics, have unnecessary or impure extensions for convenience and performance.
+    While these extensions improve the language in some ways, they also make it much more complex;
+    programs become difficult to reason about for humans and computers alike, and maintaining a compliant, feature-rich software stack becomes impossible.
+
+    M is \textit{not} a simple programming language --- the $\lambda$-Calculus is far simpler than M is.
+    M is a simple programming language which can express the extensions provided by practical programming languages \textit{without} extending the specification.
+
+    To do this, M implements the $\lambda$-Calculus as a lisp with the following properties:
+    \begin{enumerate}
+        \item $\forall f, x\in\mathbb{F}:\;f(x)=f(x)$ (All functions are pure)
+        \item $\forall a, b\in\mathbb{E},\;\exists f\in\mathbb{F}:\;f(a)=b$ (Any two expressions can be made equivalent with a macro)
+        \item $\forall a, b\in\mathbb{P},\;\forall x\in\mathbb{D}:\;\neg(x\in a\land x\in b)\implies a\cup b\in\mathbb{P}$ (Any two programs can be combined given that they do not duplicate definitions)
+    \end{enumerate}
+
+    The usefulness of these properties will be explored in section~\ref{sec:practical}, but first the language itself must be defined.
+    \newpage
+
     \section{Syntax}\label{sec:syntax}
 
     \begin{figure}[h]
         \centering
         \begin{align*}
-            &\texttt{character} &=&\;\mathbb{C}\;\text{such that}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &\texttt{character} &=&\;\mathbb{C}\;\text{where}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
             &\texttt{special}   &=&\;\{\texttt{`;'},\texttt{`"'},\texttt{`('},\texttt{`)'}\}\\
             &\texttt{comment}   &=&\;\texttt{`;'}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &\texttt{symbol}    &=&\;\texttt{(character - special - whitespace)*}\\
-            & &|&\;\texttt{`"'}\quad\texttt{character*}\quad\texttt{`"'}\\
-            & &|&\;\texttt{`""'}\quad\texttt{character*}\quad\texttt{`""'}\\
+            &                   &|&\;\texttt{`"'}\quad\texttt{character*}\quad\texttt{`"'}\\
+            &                   &|&\;\texttt{`""'}\quad\texttt{character*}\quad\texttt{`""'}\\
             &\texttt{expression}&=&\;\texttt{symbol}\\
-            & &|&\;\texttt{`('}\quad\texttt{expression*}\quad\texttt{`)'}\\
+            &                   &|&\;\texttt{`('}\quad\texttt{expression*}\quad\texttt{`)'}\\
             &\texttt{program}   &=&\;\texttt{expression*}
         \end{align*}
         \caption{The M grammar in EBNF.}
@@ -184,6 +202,8 @@ showstringspaces=false
         \end{minipage}
     \end{multicols*}
     \newpage
+
+    \section{Practical M}\label{sec:practical}
 
     \section{Reference Implementation}\label{sec:implementation}
 

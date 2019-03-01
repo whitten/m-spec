@@ -1,10 +1,52 @@
+# Introduction
+
+There has always been a clear separation between practical programming
+languages and mathematical programming constructs. Even languages such
+as ML and Scheme, though rooted in mathematics, have unnecessary or
+impure extensions for convenience and performance. While these
+extensions improve the language in some ways, they also make it much
+more complex; programs become difficult to reason about for humans and
+computers alike, and maintaining a compliant, feature-rich software
+stack becomes impossible.
+
+M is *not* a simple programming language — the
+![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
+"\\lambda")-Calculus is far simpler than M is. M is a simple programming
+language which can express the extensions provided by practical
+programming languages *without* extending the specification.
+
+To do this, M implements the
+![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
+"\\lambda")-Calculus as a lisp with the following properties:
+
+1.  ![\\forall f,
+    x\\in\\mathbb{F}:\\;f(x)=f(x)](https://latex.codecogs.com/png.latex?%5Cforall%20f%2C%20x%5Cin%5Cmathbb%7BF%7D%3A%5C%3Bf%28x%29%3Df%28x%29
+    "\\forall f, x\\in\\mathbb{F}:\\;f(x)=f(x)") (All functions are
+    pure)
+
+2.  ![\\forall a, b\\in\\mathbb{E},\\;\\exists
+    f\\in\\mathbb{F}:\\;f(a)=b](https://latex.codecogs.com/png.latex?%5Cforall%20a%2C%20b%5Cin%5Cmathbb%7BE%7D%2C%5C%3B%5Cexists%20f%5Cin%5Cmathbb%7BF%7D%3A%5C%3Bf%28a%29%3Db
+    "\\forall a, b\\in\\mathbb{E},\\;\\exists f\\in\\mathbb{F}:\\;f(a)=b")
+    (Any two expressions can be made equivalent with a macro)
+
+3.  ![\\forall a, b\\in\\mathbb{P},\\;\\forall
+    x\\in\\mathbb{D}:\\;\\neg(x\\in a\\land x\\in b)\\implies a\\cup
+    b\\in\\mathbb{P}](https://latex.codecogs.com/png.latex?%5Cforall%20a%2C%20b%5Cin%5Cmathbb%7BP%7D%2C%5C%3B%5Cforall%20x%5Cin%5Cmathbb%7BD%7D%3A%5C%3B%5Cneg%28x%5Cin%20a%5Cland%20x%5Cin%20b%29%5Cimplies%20a%5Ccup%20b%5Cin%5Cmathbb%7BP%7D
+    "\\forall a, b\\in\\mathbb{P},\\;\\forall x\\in\\mathbb{D}:\\;\\neg(x\\in a\\land x\\in b)\\implies a\\cup b\\in\\mathbb{P}")
+    (Any two programs can be combined given that they do not duplicate
+    definitions)
+
+The usefulness of these properties will be explored in
+section [5](#sec:practical), but first the language itself must be
+defined.
+
 # Syntax
 
   
 ![\\begin{aligned}
-&\\texttt{character} &=&\\;\\mathbb{C}\\;\\text{such
-that}\\;\\mathbb{C}\\supseteq\\texttt{(special + newline +
-whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+&\\texttt{character}
+&=&\\;\\mathbb{C}\\;\\text{where}\\;\\mathbb{C}\\supseteq\\texttt{(special
++ newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
 &\\texttt{special}
 &=&\\;\\{\\texttt{\`;'},\\texttt{\`"'},\\texttt{\`('},\\texttt{\`)'}\\}\\\\
 &\\texttt{comment} &=&\\;\\texttt{\`;'}\\quad\\texttt{(character -
@@ -19,16 +61,16 @@ whitespace)\*}\\\\
 &
 &|&\\;\\texttt{\`('}\\quad\\texttt{expression\*}\\quad\\texttt{\`)'}\\\\
 &\\texttt{program} &=&\\;\\texttt{expression\*}
-\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%3B%5Ctext%7Bsuch%20that%7D%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
+\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%3B%5Ctext%7Bwhere%7D%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
 "\\begin{aligned}
-            &\\texttt{character} &=&\\;\\mathbb{C}\\;\\text{such that}\\;\\mathbb{C}\\supseteq\\texttt{(special + newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+            &\\texttt{character} &=&\\;\\mathbb{C}\\;\\text{where}\\;\\mathbb{C}\\supseteq\\texttt{(special + newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
             &\\texttt{special}   &=&\\;\\{\\texttt{\`;'},\\texttt{\`\"'},\\texttt{\`('},\\texttt{\`)'}\\}\\\\
             &\\texttt{comment}   &=&\\;\\texttt{\`;'}\\quad\\texttt{(character - newline)*}\\quad\\texttt{newline}\\\\
             &\\texttt{symbol}    &=&\\;\\texttt{(character - special - whitespace)*}\\\\
-            & &|&\\;\\texttt{\`\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"'}\\\\
-            & &|&\\;\\texttt{\`\"\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"\"'}\\\\
+            &                   &|&\\;\\texttt{\`\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"'}\\\\
+            &                   &|&\\;\\texttt{\`\"\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"\"'}\\\\
             &\\texttt{expression}&=&\\;\\texttt{symbol}\\\\
-            & &|&\\;\\texttt{\`('}\\quad\\texttt{expression*}\\quad\\texttt{\`)'}\\\\
+            &                   &|&\\;\\texttt{\`('}\\quad\\texttt{expression*}\\quad\\texttt{\`)'}\\\\
             &\\texttt{program}   &=&\\;\\texttt{expression*}
         \\end{aligned}")  
 
@@ -67,7 +109,7 @@ inline symbols (for example, the symbols `"()"` and `"""""`).
 ## Expressions
 
 Expressions in M have two forms, symbols and lists. Symbol expressions
-are symbols as defined in section [1.4](#subsec:symbols). Lists
+are symbols as defined in section [2.4](#subsec:symbols). Lists
 expressions are lists of expressions surrounded by matching parentheses.
 
 ## Programs
@@ -140,8 +182,8 @@ the expression encoding of `argument`, then evaluate the result.
 
 Apply expressions are expressions of the form `(value argument)`. If
 `value` is a function, it performs application as described in
-section [2.2](#subsec:function). If `value` is a macro, it performs
-application as described in section [2.4](#subsec:macro)
+section [3.2](#subsec:function). If `value` is a macro, it performs
+application as described in section [3.4](#subsec:macro)
 
 # Encodings
 
@@ -252,6 +294,8 @@ application as described in section [2.4](#subsec:macro)
 (def symbol? left?)
 (def list? right?)
 ```
+
+# Practical M
 
 # Reference Implementation
 
