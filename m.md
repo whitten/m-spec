@@ -9,7 +9,7 @@ more complex; programs become difficult to reason about for humans and
 computers alike, and maintaining a compliant, feature-rich software
 stack becomes impossible.
 
-M is *not* a simple programming language — the
+M is not just a simple programming language — the
 ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
 "\\lambda")-Calculus is far simpler than M is. M is a simple programming
 language which can express the extensions provided by practical
