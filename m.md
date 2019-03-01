@@ -50,9 +50,9 @@ defined.
 
   
 ![\\begin{aligned}
-&\\texttt{character}
-&=&\\;\\mathbb{C}\\;\\text{where}\\;\\mathbb{C}\\supseteq\\texttt{(special
-+ newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+&\\forall\\mathbb{C} &:&\\;\\mathbb{C}\\supseteq\\texttt{(special +
+newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+&\\texttt{character} &=&\\;\\mathbb{C}\\\\
 &\\texttt{special}
 &=&\\;\\{\\texttt{\`;'},\\texttt{\`"'},\\texttt{\`('},\\texttt{\`)'}\\}\\\\
 &\\texttt{comment} &=&\\;\\texttt{\`;'}\\quad\\texttt{(character -
@@ -67,9 +67,10 @@ whitespace)\*}\\\\
 &
 &|&\\;\\texttt{\`('}\\quad\\texttt{expression\*}\\quad\\texttt{\`)'}\\\\
 &\\texttt{program} &=&\\;\\texttt{expression\*}
-\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%3B%5Ctext%7Bwhere%7D%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
+\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cforall%5Cmathbb%7BC%7D%20%20%26%3A%26%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
 "\\begin{aligned}
-            &\\texttt{character} &=&\\;\\mathbb{C}\\;\\text{where}\\;\\mathbb{C}\\supseteq\\texttt{(special + newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+            &\\forall\\mathbb{C}  &:&\\;\\mathbb{C}\\supseteq\\texttt{(special + newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
+            &\\texttt{character} &=&\\;\\mathbb{C}\\\\
             &\\texttt{special}   &=&\\;\\{\\texttt{\`;'},\\texttt{\`\"'},\\texttt{\`('},\\texttt{\`)'}\\}\\\\
             &\\texttt{comment}   &=&\\;\\texttt{\`;'}\\quad\\texttt{(character - newline)*}\\quad\\texttt{newline}\\\\
             &\\texttt{symbol}    &=&\\;\\texttt{(character - special - whitespace)*}\\\\

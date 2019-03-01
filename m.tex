@@ -57,7 +57,8 @@ showstringspaces=false
     \begin{figure}[h]
         \centering
         \begin{align*}
-            &\texttt{character} &=&\;\mathbb{C}\;\text{where}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &\forall\mathbb{C}  &:&\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &\texttt{character} &=&\;\mathbb{C}\\
             &\texttt{special}   &=&\;\{\texttt{`;'},\texttt{`"'},\texttt{`('},\texttt{`)'}\}\\
             &\texttt{comment}   &=&\;\texttt{`;'}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &\texttt{symbol}    &=&\;\texttt{(character - special - whitespace)*}\\

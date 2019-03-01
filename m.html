@@ -105,7 +105,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The usefulness of these properties will be explored in section <a href="#sec:practical" data-reference-type="ref" data-reference="sec:practical">5</a>, but first the language itself must be defined.</p>
 <h1 id="sec:syntax">Syntax</h1>
 <p><span class="math display">\begin{aligned}
-            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\;\text{where}\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &amp;\forall\mathbb{C}  &amp;:&amp;\;\mathbb{C}\supseteq\texttt{(special + newline + whitespace)}\land\texttt{null}\notin\mathbb{C}\\
+            &amp;\texttt{character} &amp;=&amp;\;\mathbb{C}\\
             &amp;\texttt{special}   &amp;=&amp;\;\{\texttt{`;&#39;},\texttt{`&quot;&#39;},\texttt{`(&#39;},\texttt{`)&#39;}\}\\
             &amp;\texttt{comment}   &amp;=&amp;\;\texttt{`;&#39;}\quad\texttt{(character - newline)*}\quad\texttt{newline}\\
             &amp;\texttt{symbol}    &amp;=&amp;\;\texttt{(character - special - whitespace)*}\\
