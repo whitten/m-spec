@@ -4,47 +4,31 @@ There has always been a clear separation between practical programming
 languages and mathematical programming constructs. Even languages such
 as ML and Scheme, though rooted in mathematics, have unnecessary or
 impure extensions for convenience and performance. While these
-extensions improve the language in some ways, they also make it much
-more complex; programs become difficult to reason about for humans and
+extensions improve the language in some ways, they also make it more
+complex; programs become difficult to reason about for humans and
 computers alike, and maintaining a compliant, feature-rich software
-stack becomes impossible.
+stack becomes exponentially difficult.
 
-Simplicity is required for a programming language to be useful; and when
-writing simple programs, most programming languages are. It is when
-programs get more complex, be it for performance or for abstraction,
-that simplicity is discarded; complex extensions are used, edge cases
-are abused, and exceptions to rules become the norm.
+Simplicity is to reason about a programming language; and when writing
+simple programs, most programming languages are. It is when programs get
+more complex, be it for performance or for abstraction, that simplicity
+is discarded; complex extensions are used, edge cases are abused, and
+reasoning about a program becomes impossible.
 
-M is not just a simple programming language — the
+M is not just a simple programming language — mathematical systems like
+Turing Machines and the
 ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
-"\\lambda")-Calculus is far simpler than M is. M is a simple programming
-language which can express the extensions provided by practical
-programming languages without additional complexity.
+"\\lambda")-Calculus are much simpler than M is. M is a simple
+programming language which can express the extensions provided by
+practical programming languages without the additional complexity.
 
-To do this, M implements the
-![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda
-"\\lambda")-Calculus as a lisp with the following properties:
+To do this, M exhibits the following properties:
 
-1.  ![\\forall f,
-    x\\in\\mathbb{F}:\\;f(x)=f(x)](https://latex.codecogs.com/png.latex?%5Cforall%20f%2C%20x%5Cin%5Cmathbb%7BF%7D%3A%5C%3Bf%28x%29%3Df%28x%29
-    "\\forall f, x\\in\\mathbb{F}:\\;f(x)=f(x)") (All functions are
-    pure)
+1.  All functions are pure.
 
-2.  ![\\forall a, b\\in\\mathbb{E},\\;\\exists
-    f\\in\\mathbb{F}:\\;f(a)=b](https://latex.codecogs.com/png.latex?%5Cforall%20a%2C%20b%5Cin%5Cmathbb%7BE%7D%2C%5C%3B%5Cexists%20f%5Cin%5Cmathbb%7BF%7D%3A%5C%3Bf%28a%29%3Db
-    "\\forall a, b\\in\\mathbb{E},\\;\\exists f\\in\\mathbb{F}:\\;f(a)=b")
-    (Any two expressions can be made equivalent with a macro)
+2.  All definitions are unordered.
 
-3.  ![\\forall a, b\\in\\mathbb{P},\\;\\forall
-    x\\in\\mathbb{D}:\\;\\neg(x\\in a\\land x\\in b)\\implies a\\cup
-    b\\in\\mathbb{P}](https://latex.codecogs.com/png.latex?%5Cforall%20a%2C%20b%5Cin%5Cmathbb%7BP%7D%2C%5C%3B%5Cforall%20x%5Cin%5Cmathbb%7BD%7D%3A%5C%3B%5Cneg%28x%5Cin%20a%5Cland%20x%5Cin%20b%29%5Cimplies%20a%5Ccup%20b%5Cin%5Cmathbb%7BP%7D
-    "\\forall a, b\\in\\mathbb{P},\\;\\forall x\\in\\mathbb{D}:\\;\\neg(x\\in a\\land x\\in b)\\implies a\\cup b\\in\\mathbb{P}")
-    (Any two programs can be combined given that they do not duplicate
-    definitions)
-
-The usefulness of these properties will be explored in
-section [5](#sec:practical), but first the language itself must be
-defined.
+3.  Any two expressions can be made equivalent with a macro.
 
 # Syntax
 
@@ -302,24 +286,22 @@ application as described in section [3.4](#subsec:macro)
 (def list? right?)
 ```
 
-# Practical M
-
 # Reference Implementation
 
 ## Parser
 
 ``` matlab
-()
+TODO
 ```
 
 ## Interpreter
 
 ``` matlab
-()
+TODO
 ```
 
 ## Compiler
 
 ``` matlab
-()
+TODO
 ```

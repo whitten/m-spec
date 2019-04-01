@@ -31,25 +31,23 @@ showstringspaces=false
 
     There has always been a clear separation between practical programming languages and mathematical programming constructs.
     Even languages such as ML and Scheme, though rooted in mathematics, have unnecessary or impure extensions for convenience and performance.
-    While these extensions improve the language in some ways, they also make it much more complex;
-    programs become difficult to reason about for humans and computers alike, and maintaining a compliant, feature-rich software stack becomes impossible.
+    While these extensions improve the language in some ways, they also make it more complex;
+    programs become difficult to reason about for humans and computers alike, and maintaining a compliant, feature-rich software stack becomes exponentially difficult.
 
-    Simplicity is required for a programming language to be useful;
+    Simplicity is to reason about a programming language;
     and when writing simple programs, most programming languages are.
     It is when programs get more complex, be it for performance or for abstraction, that simplicity is discarded;
-    complex extensions are used, edge cases are abused, and exceptions to rules become the norm.
+    complex extensions are used, edge cases are abused, and reasoning about a program becomes impossible.
 
-    M is not just a simple programming language --- the $\lambda$-Calculus is far simpler than M is.
-    M is a simple programming language which can express the extensions provided by practical programming languages without additional complexity.
+    M is not just a simple programming language --- mathematical systems like Turing Machines and the $\lambda$-Calculus are much simpler than M is.
+    M is a simple programming language which can express the extensions provided by practical programming languages without the additional complexity.
 
-    To do this, M implements the $\lambda$-Calculus as a lisp with the following properties:
+    To do this, M exhibits the following properties:
     \begin{enumerate}
-        \item $\forall f, x\in\mathbb{F}:\;f(x)=f(x)$ (All functions are pure)
-        \item $\forall a, b\in\mathbb{E},\;\exists f\in\mathbb{F}:\;f(a)=b$ (Any two expressions can be made equivalent with a macro)
-        \item $\forall a, b\in\mathbb{P},\;\forall x\in\mathbb{D}:\;\neg(x\in a\land x\in b)\implies a\cup b\in\mathbb{P}$ (Any two programs can be combined given that they do not duplicate definitions)
+        \item All functions are pure.
+        \item All definitions are unordered.
+        \item Any two expressions can be made equivalent with a macro.
     \end{enumerate}
-
-    The usefulness of these properties will be explored in section~\ref{sec:practical}, but first the language itself must be defined.
     \newpage
 
     \section{Syntax}\label{sec:syntax}
@@ -208,8 +206,6 @@ showstringspaces=false
         \end{minipage}
     \end{multicols*}
     \newpage
-
-    \section{Practical M}\label{sec:practical}
 
     \section{Reference Implementation}\label{sec:implementation}
 
