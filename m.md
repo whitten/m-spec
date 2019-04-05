@@ -7,13 +7,13 @@ impure extensions for convenience and performance. While these
 extensions improve the language in some ways, they also make it more
 complex; programs become difficult to reason about for humans and
 computers alike, and maintaining a compliant, feature-rich software
-stack becomes exponentially difficult.
+stack becomes impossible.
 
-Simplicity is to reason about a programming language; and when writing
-simple programs, most programming languages are. It is when programs get
-more complex, be it for performance or for abstraction, that simplicity
-is discarded; complex extensions are used, edge cases are abused, and
-reasoning about a program becomes impossible.
+Simplicity is necessary to reason about a programming language; and when
+writing simple programs, most programming languages are. It is when
+programs get more complex, be it for performance or for abstraction,
+that simplicity is discarded; complex extensions are used, edge cases
+are abused, and reasoning about a program becomes impossible.
 
 M is not just a simple programming language — mathematical systems like
 Turing Machines and the
