@@ -95,7 +95,7 @@ Symbols in M have two forms, inline and literal. Inline symbols are
 strings terminated by whitespace or a special symbol, and should be used
 by default. Literal symbols are strings surrounded by one or two quotes,
 and should only be used when a symbol is impossible to represent using
-inline symbols (for example, the symbols `"()"` and `"""""`).
+inline symbols (for example, the symbols `"()"` and `""""`).
 
 ## Expressions
 
