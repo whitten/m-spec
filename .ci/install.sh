@@ -2,6 +2,9 @@
 
 set -e
 
+# Update Package List
+sudo apt update
+
 # Install LaTeX
 sudo apt install --yes --force-yes texlive
 
