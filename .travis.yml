@@ -1,0 +1,17 @@
+language: generic
+
+branches:
+    only: master
+
+install: ./.ci/install.sh
+script: ./.ci/build.sh
+
+deploy:
+    provider: releases
+    overwrite: true
+    skip_cleanup: true
+    target_branch: master
+    api_key: $GH_TOKEN
+    file:
+        - "./pandoc.css"
+        - m.*
