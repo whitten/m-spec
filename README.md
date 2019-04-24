@@ -4,4 +4,4 @@ The specification for [the M programming language](https://github.com/m-language
 
 - To generate the pdf, run `pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf -aux-directory=./auxil m.tex`
 - To generate markdown, run `pandoc -s -t gfm --syntax-definition=m.xml --webtex --listings m.tex -o m.md`
-- To generate html, run `pandoc -s -t html5 --syntax-definition=m.xml --katex --listings m.tex -o m.html`
+- To generate html, run `pandoc -s -t html5 --syntax-definition=m.xml --katex --css pandoc.css --listings m.tex -o m.html`

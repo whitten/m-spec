@@ -1,2 +1,5 @@
 auxil
 m.synctex.gz
+*.aux
+*.log
+*.toc
