@@ -13,6 +13,7 @@ deploy:
     skip_cleanup: true
     target_branch: master
     api_key: $GH_TOKEN
+    file_glob: true
     file:
         - "./pandoc.css"
         - m.*
