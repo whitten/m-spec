@@ -51,17 +51,17 @@ whitespace)\*}\\\\
 &
 &|&\\;\\texttt{\`('}\\quad\\texttt{expression\*}\\quad\\texttt{\`)'}\\\\
 &\\texttt{program} &=&\\;\\texttt{expression\*}
-\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cforall%5Cmathbb%7BC%7D%20%20%26%3A%26%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
+\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cforall%5Cmathbb%7BC%7D%20%20%26%3A%26%5C%3B%5Cmathbb%7BC%7D%5Csupseteq%5Ctexttt%7B%28special%20%2B%20newline%20%2B%20whitespace%29%7D%5Cland%5Ctexttt%7Bnull%7D%5Cnotin%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcharacter%7D%20%26%3D%26%5C%3B%5Cmathbb%7BC%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bspecial%7D%20%20%20%26%3D%26%5C%3B%5C%7B%5Ctexttt%7B%60%3B%27%7D%2C%5Ctexttt%7B%60%22%27%7D%2C%5Ctexttt%7B%60%28%27%7D%2C%5Ctexttt%7B%60%29%27%7D%5C%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bcomment%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%60%3B%27%7D%5Cquad%5Ctexttt%7B%28character%20-%20newline%29%2A%7D%5Cquad%5Ctexttt%7Bnewline%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bsymbol%7D%20%20%20%20%26%3D%26%5C%3B%5Ctexttt%7B%28character%20-%20special%20-%20whitespace%29%2A%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%22%22%27%7D%5Cquad%5Ctexttt%7Bcharacter%2A%7D%5Cquad%5Ctexttt%7B%60%22%22%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bexpression%7D%26%3D%26%5C%3B%5Ctexttt%7Bsymbol%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%20%26%7C%26%5C%3B%5Ctexttt%7B%60%28%27%7D%5Cquad%5Ctexttt%7Bexpression%2A%7D%5Cquad%5Ctexttt%7B%60%29%27%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Ctexttt%7Bprogram%7D%20%20%20%26%3D%26%5C%3B%5Ctexttt%7Bexpression%2A%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
 "\\begin{aligned}
             &\\forall\\mathbb{C}  &:&\\;\\mathbb{C}\\supseteq\\texttt{(special + newline + whitespace)}\\land\\texttt{null}\\notin\\mathbb{C}\\\\
             &\\texttt{character} &=&\\;\\mathbb{C}\\\\
             &\\texttt{special}   &=&\\;\\{\\texttt{\`;'},\\texttt{\`\"'},\\texttt{\`('},\\texttt{\`)'}\\}\\\\
             &\\texttt{comment}   &=&\\;\\texttt{\`;'}\\quad\\texttt{(character - newline)*}\\quad\\texttt{newline}\\\\
             &\\texttt{symbol}    &=&\\;\\texttt{(character - special - whitespace)*}\\\\
-            &                   &|&\\;\\texttt{\`\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"'}\\\\
-            &                   &|&\\;\\texttt{\`\"\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"\"'}\\\\
+            & &|&\\;\\texttt{\`\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"'}\\\\
+            & &|&\\;\\texttt{\`\"\"'}\\quad\\texttt{character*}\\quad\\texttt{\`\"\"'}\\\\
             &\\texttt{expression}&=&\\;\\texttt{symbol}\\\\
-            &                   &|&\\;\\texttt{\`('}\\quad\\texttt{expression*}\\quad\\texttt{\`)'}\\\\
+            & &|&\\;\\texttt{\`('}\\quad\\texttt{expression*}\\quad\\texttt{\`)'}\\\\
             &\\texttt{program}   &=&\\;\\texttt{expression*}
         \\end{aligned}")  
 
@@ -113,31 +113,27 @@ are not restricted to a single file or a null-terminated string.
 
   
 ![\\begin{aligned}
-\\text{(Symbol)}\\;&\\frac{\\;}{\\langle
-x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
+&\\frac{\\;}{\\langle x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
 &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(macro
 x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) =
-(v,\\top)\\rangle}&\\;\\text{(Macro)}\\\\
-\\text{(Function)}\\;&\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda
-x.e}
+(v,\\top)\\rangle}& \\\\
+&\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda x.e}
 &\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\lambda x.e\\quad\\langle
 a,\\Gamma\\rangle\\Downarrow i\\quad\\langle e\[x/i\]\\rangle\\Downarrow
-v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow
-v}&\\;\\text{(Apply-Function)}\\\\
-\\text{(Define)}\\;&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow
-v}{\\langle\\texttt{(def x e)},\\Gamma\\rangle\\Downarrow\\langle
-v,\\Gamma(x) = (v,\\bot)\\rangle}
+v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow v}&\\\\
+&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(def x
+e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
 &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle
 f(e),\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(m
-e)},\\Gamma\\rangle\\Downarrow v}&\\;\\text{(Apply-Macro)}
-\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Ctext%7B%28Symbol%29%7D%5C%3B%26%5Cfrac%7B%5C%3B%7D%7B%5Clangle%20x%2C%5CGamma%5Crangle%5CDownarrow%5CGamma%28x%29%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28macro%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Ctop%29%5Crangle%7D%26%5C%3B%5Ctext%7B%28Macro%29%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Ctext%7B%28Function%29%7D%5C%3B%26%5Cfrac%7B%5C%3B%7D%7B%5Ctexttt%7B%28fn%20x%20e%29%7D%5CDownarrow%5Clambda%20x.e%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20f%2C%5CGamma%5Crangle%5CDownarrow%5Clambda%20x.e%5Cquad%5Clangle%20a%2C%5CGamma%5Crangle%5CDownarrow%20i%5Cquad%5Clangle%20e%5Bx%2Fi%5D%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28f%20a%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%5C%3B%5Ctext%7B%28Apply-Function%29%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Ctext%7B%28Define%29%7D%5C%3B%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28def%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Cbot%29%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%28m%29%3D%28f%2C%5Ctop%29%5Cquad%5Clangle%20f%28e%29%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28m%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%5C%3B%5Ctext%7B%28Apply-Macro%29%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
+e)},\\Gamma\\rangle\\Downarrow v}&
+\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5C%3B%7D%7B%5Clangle%20x%2C%5CGamma%5Crangle%5CDownarrow%5CGamma%28x%29%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28macro%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Ctop%29%5Crangle%7D%26%20%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5C%3B%7D%7B%5Ctexttt%7B%28fn%20x%20e%29%7D%5CDownarrow%5Clambda%20x.e%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20f%2C%5CGamma%5Crangle%5CDownarrow%5Clambda%20x.e%5Cquad%5Clangle%20a%2C%5CGamma%5Crangle%5CDownarrow%20i%5Cquad%5Clangle%20e%5Bx%2Fi%5D%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28f%20a%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28def%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Cbot%29%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%28m%29%3D%28f%2C%5Ctop%29%5Cquad%5Clangle%20f%28e%29%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28m%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
 "\\begin{aligned}
-            \\text{(Symbol)}\\;&\\frac{\\;}{\\langle x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
-            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(macro x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\top)\\rangle}&\\;\\text{(Macro)}\\\\
-            \\text{(Function)}\\;&\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda x.e}
-            &\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\lambda x.e\\quad\\langle a,\\Gamma\\rangle\\Downarrow i\\quad\\langle e[x/i]\\rangle\\Downarrow v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow v}&\\;\\text{(Apply-Function)}\\\\
-            \\text{(Define)}\\;&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(def x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
-            &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle f(e),\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(m e)},\\Gamma\\rangle\\Downarrow v}&\\;\\text{(Apply-Macro)}
+            &\\frac{\\;}{\\langle x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
+            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(macro x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\top)\\rangle}&  \\\\
+            &\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda x.e}
+            &\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\lambda x.e\\quad\\langle a,\\Gamma\\rangle\\Downarrow i\\quad\\langle e[x/i]\\rangle\\Downarrow v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow v}&\\\\
+            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(def x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
+            &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle f(e),\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(m e)},\\Gamma\\rangle\\Downarrow v}&
         \\end{aligned}")  
 
 ## Symbol
@@ -284,24 +280,4 @@ application as described in section [3.4](#subsec:macro)
 
 (def symbol? left?)
 (def list? right?)
-```
-
-# Reference Implementation
-
-## Parser
-
-``` matlab
-TODO
-```
-
-## Interpreter
-
-``` matlab
-TODO
-```
-
-## Compiler
-
-``` matlab
-TODO
 ```
