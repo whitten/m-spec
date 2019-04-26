@@ -1,9 +1,4 @@
 ;;; Booleans
 
-(def true
-  (fn x
-    (fn _ x)))
-
-(def false
-  (fn _
-    (fn x x)))
+(def true (fn x _ x))
+(def false (fn _ x x))

@@ -184,13 +184,8 @@ application as described in section [3.4](#subsec:macro)
 ``` matlab
 ;;; Booleans
 
-(def true
-  (fn x
-    (fn _ x)))
-
-(def false
-  (fn _
-    (fn x x)))
+(def true (fn x _ x))
+(def false (fn _ x x))
 ```
 
 ``` matlab
@@ -242,9 +237,8 @@ application as described in section [3.4](#subsec:macro)
 (def nil (left false))
 
 (def cons
-  (fn car
-    (fn cdr
-      (right (pair car cdr)))))
+  (fn car cdr
+    (right (pair car cdr))))
 
 (def car
   (fn value
@@ -260,12 +254,17 @@ application as described in section [3.4](#subsec:macro)
 ``` matlab
 ;;; Natural Numbers
 
-(def 0 (left (fn x x)))
-(def 0? left?)
-(def inc right)
-(def dec
-  (fn nat
-    (nat left (fn x x))))
+(def 0 (fn f x x))
+(def 1 (fn f x (f x)))
+
+(def 0? n
+  (fn n
+    (n (fn _ true) false)))
+
+(def inc
+  (fn n
+    (fn f x
+      (f (n f x)))))
 ```
 
 ``` matlab

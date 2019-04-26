@@ -3,9 +3,8 @@
 (def nil (left false))
 
 (def cons
-  (fn car
-    (fn cdr
-      (right (pair car cdr)))))
+  (fn car cdr
+    (right (pair car cdr))))
 
 (def car
   (fn value
