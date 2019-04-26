@@ -113,27 +113,33 @@ are not restricted to a single file or a null-terminated string.
 
   
 ![\\begin{aligned}
-&\\frac{\\;}{\\langle x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
-&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(macro
-x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) =
-(v,\\top)\\rangle}& \\\\
-&\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda x.e}
-&\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\lambda x.e\\quad\\langle
-a,\\Gamma\\rangle\\Downarrow i\\quad\\langle e\[x/i\]\\rangle\\Downarrow
-v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow v}&\\\\
-&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(def x
-e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
+&\\frac{\\Gamma(x)=(v,m)}{\\langle x,\\Gamma\\rangle\\Downarrow\\langle
+v,\\Gamma\\rangle}
+&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow\\langle
+v,\\Gamma\\rangle}{\\langle\\texttt{(macro x
+e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) =
+(v,\\top)\\rangle}&\\\\
+&\\frac{\\Gamma}{\\texttt{(fn x e)}\\Downarrow\\langle\\lambda
+x.e,\\Gamma\\rangle}
 &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle
-f(e),\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(m
-e)},\\Gamma\\rangle\\Downarrow v}&
-\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5C%3B%7D%7B%5Clangle%20x%2C%5CGamma%5Crangle%5CDownarrow%5CGamma%28x%29%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28macro%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Ctop%29%5Crangle%7D%26%20%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5C%3B%7D%7B%5Ctexttt%7B%28fn%20x%20e%29%7D%5CDownarrow%5Clambda%20x.e%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20f%2C%5CGamma%5Crangle%5CDownarrow%5Clambda%20x.e%5Cquad%5Clangle%20a%2C%5CGamma%5Crangle%5CDownarrow%20i%5Cquad%5Clangle%20e%5Bx%2Fi%5D%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28f%20a%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28def%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Cbot%29%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%28m%29%3D%28f%2C%5Ctop%29%5Cquad%5Clangle%20f%28e%29%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%7B%5Clangle%5Ctexttt%7B%28m%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%20v%7D%26%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
+f(\\Gamma,e),\\Gamma\\rangle\\Downarrow\\langle
+v,\\Gamma\\rangle}{\\langle\\texttt{(m
+e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}&\\\\
+&\\frac{\\langle e,\\Gamma\\rangle\\Downarrow\\langle
+v,\\Gamma\\rangle}{\\langle\\texttt{(def x
+e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
+&\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\langle\\lambda
+x.e,\\Gamma\\rangle\\quad\\langle a,\\Gamma\\rangle\\Downarrow\\langle
+i,\\Gamma\\rangle}{\\langle\\texttt{(f
+a)},\\Gamma\\rangle\\Downarrow\\langle e\[x/i\],\\Gamma\\rangle}&
+\\end{aligned}](https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%28x%29%3D%28v%2Cm%29%7D%7B%5Clangle%20x%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%5Crangle%7D%7B%5Clangle%5Ctexttt%7B%28macro%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Ctop%29%5Crangle%7D%26%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%7D%7B%5Ctexttt%7B%28fn%20x%20e%29%7D%5CDownarrow%5Clangle%5Clambda%20x.e%2C%5CGamma%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5CGamma%28m%29%3D%28f%2C%5Ctop%29%5Cquad%5Clangle%20f%28%5CGamma%2Ce%29%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%5Crangle%7D%7B%5Clangle%5Ctexttt%7B%28m%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%5Crangle%7D%26%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20e%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%5Crangle%7D%7B%5Clangle%5Ctexttt%7B%28def%20x%20e%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20v%2C%5CGamma%28x%29%20%3D%20%28v%2C%5Cbot%29%5Crangle%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%26%5Cfrac%7B%5Clangle%20f%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%5Clambda%20x.e%2C%5CGamma%5Crangle%5Cquad%5Clangle%20a%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20i%2C%5CGamma%5Crangle%7D%7B%5Clangle%5Ctexttt%7B%28f%20a%29%7D%2C%5CGamma%5Crangle%5CDownarrow%5Clangle%20e%5Bx%2Fi%5D%2C%5CGamma%5Crangle%7D%26%0A%20%20%20%20%20%20%20%20%5Cend%7Baligned%7D
 "\\begin{aligned}
-            &\\frac{\\;}{\\langle x,\\Gamma\\rangle\\Downarrow\\Gamma(x)}
-            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(macro x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\top)\\rangle}&  \\\\
-            &\\frac{\\;}{\\texttt{(fn x e)}\\Downarrow\\lambda x.e}
-            &\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\lambda x.e\\quad\\langle a,\\Gamma\\rangle\\Downarrow i\\quad\\langle e[x/i]\\rangle\\Downarrow v}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow v}&\\\\
-            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(def x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
-            &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle f(e),\\Gamma\\rangle\\Downarrow v}{\\langle\\texttt{(m e)},\\Gamma\\rangle\\Downarrow v}&
+            &\\frac{\\Gamma(x)=(v,m)}{\\langle x,\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}
+            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}{\\langle\\texttt{(macro x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\top)\\rangle}&\\\\
+            &\\frac{\\Gamma}{\\texttt{(fn x e)}\\Downarrow\\langle\\lambda x.e,\\Gamma\\rangle}
+            &\\frac{\\Gamma(m)=(f,\\top)\\quad\\langle f(\\Gamma,e),\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}{\\langle\\texttt{(m e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}&\\\\
+            &\\frac{\\langle e,\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma\\rangle}{\\langle\\texttt{(def x e)},\\Gamma\\rangle\\Downarrow\\langle v,\\Gamma(x) = (v,\\bot)\\rangle}
+            &\\frac{\\langle f,\\Gamma\\rangle\\Downarrow\\langle\\lambda x.e,\\Gamma\\rangle\\quad\\langle a,\\Gamma\\rangle\\Downarrow\\langle i,\\Gamma\\rangle}{\\langle\\texttt{(f a)},\\Gamma\\rangle\\Downarrow\\langle e[x/i],\\Gamma\\rangle}&
         \\end{aligned}")  
 
 ## Symbol
@@ -163,7 +169,8 @@ are invalid.
 Macro expressions are expressions of the form `(macro name value)`. They
 state that all symbols `name` evaluate to `value`, and evaluate to the
 value of `name`. When applied, macros evaluate `name` and apply it to
-the expression encoding of `argument`, then evaluate the result.
+the environment and the expression of `argument`, then evaluate the
+result.
 
 ## Apply
 
@@ -273,11 +280,4 @@ application as described in section [3.4](#subsec:macro)
 
 (def list->symbol (fn x x))
 (def symbol->list (fn x x))
-```
-
-``` matlab
-;;; Expressions
-
-(def symbol? left?)
-(def list? right?)
 ```
