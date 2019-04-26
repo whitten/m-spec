@@ -269,7 +269,7 @@ application as described in section [3.4](#subsec:macro)
 ```
 
 ``` matlab
-;;; Chars
+;;; Characters
 
 (def nat->char (fn x x))
 (def char->nat (fn x x))
